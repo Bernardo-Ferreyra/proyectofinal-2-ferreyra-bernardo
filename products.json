@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "title": "producto de prueba 1",
+        "description": "prueba 1",
+        "code": 2051,
+        "thumbnail": "sin imagen 1",
+        "price": 1000,
+        "stock": 23
+    },
+    {
+        "id": 2,
+        "title": "producto de prueba 2",
+        "description": "prueba 2",
+        "code": 2052,
+        "thumbnail": "sin imagen 2",
+        "price": 1000,
+        "stock": 23
+    },
+    {
+        "id": 3,
+        "title": "producto de prueba 3",
+        "description": "prueba 3",
+        "code": 20503,
+        "thumbnail": "sin imagen 3",
+        "price": 1000,
+        "stock": 23
+    },
+    {
+        "id": 4,
+        "title": "producto de prueba 4",
+        "description": "prueba 4",
+        "code": 2054,
+        "thumbnail": "sin imagen 4",
+        "price": 1000,
+        "stock": 23
+    },
+    {
+        "id": 5,
+        "title": "producto de prueba 5",
+        "description": "prueba 5",
+        "code": 2055,
+        "thumbnail": "sin imagen 5",
+        "price": 1000,
+        "stock": 23
+    },
+    {
+        "id": 6,
+        "title": "producto de prueba 6",
+        "description": "prueba 6",
+        "code": 2056,
+        "thumbnail": "sin imagen 6",
+        "price": 1000,
+        "stock": 23
+    },
+    {
+        "id": 7,
+        "title": "producto de prueba 7",
+        "description": "prueba 7",
+        "code": 2057,
+        "thumbnail": "sin imagen 7",
+        "price": 1000,
+        "stock": 23
+    },
+    {
+        "id": 8,
+        "title": "producto de prueba 8",
+        "description": "prueba 8",
+        "code": 2058,
+        "thumbnail": "sin imagen 8",
+        "price": 1000,
+        "stock": 23
+    },
+    {
+        "id": 9,
+        "title": "producto de prueba 9",
+        "description": "prueba 9",
+        "code": 2059,
+        "thumbnail": "sin imagen 9",
+        "price": 1000,
+        "stock": 23
+    },
+    {
+        "id": 10,
+        "title": "producto de prueba 10",
+        "description": "prueba 10",
+        "code": 20510,
+        "thumbnail": "sin imagen 10",
+        "price": 1000,
+        "stock": 23
+    }
+]
