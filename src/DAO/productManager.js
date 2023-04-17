@@ -40,9 +40,9 @@ class ProductManager {
       const existingCode = this.products.find((product) => product.code === code);
 
       if (!title || !description || !code || !price || !stock || !category ) {
-        return console.log("Todos los campos son obligatorios!");
+        return {status:'error', message:'Todos los campos son obligatorios!'}
       } else if (existingCode) {
-        return console.log("Ya existe un producto con ese codigo");
+        return {status:'error', message:'Ya existe un producto con ese codigo'}
       } else {
         const status = true;
         if (this.products.length > 0) {

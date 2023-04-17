@@ -96,11 +96,24 @@
 		"title": "producto de prueba 8",
 		"description": "prueba 8",
 		"code": 108,
-		"price": 12355,
+		"price": 123558,
 		"stock": 343358,
 		"category": "prueba 8",
 		"thumbnail": [
 			"ruta de imagen8"
+		]
+	},
+	{
+		"id": 9,
+		"status": true,
+		"title": "producto de prueba 9",
+		"description": "prueba9",
+		"price": 1234567899,
+		"code": 109,
+		"stock": 321554,
+		"category": "prueba9",
+		"thumbnail": [
+			"ruta de imagen9"
 		]
 	}
 ]

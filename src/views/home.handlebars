@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center align-items-center flex-column h-100">
+    <h1 class="mb-5">{{title}}</h1>
+    <div class="w-100 px-4">
+        {{#if products.length}}
+        <table class="table table-striped table-dark">
+          <thead class="text-center">
+            <tr>
+              <th scope="col">#ID</th>
+              <th scope="col">nombre</th>
+              <th scope="col">codigo</th>
+              <th scope="col">precio</th>
+              <th scope="col">categoria</th>
+              <th scope="col">descripcion</th>
+              <th scope="col">stock</th>
+              <th scope="col">imagenes</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            {{#each products}}
+            <tr>
+              <th scope="row">{{this.id}}</th>
+              <td>{{this.title}}</td>
+              <td>{{this.code}}</td>
+              <td>{{this.price}}</td>
+              <td>{{this.category}}</td>
+              <td>{{this.description}}</td>
+              <td>{{this.stock}}</td>
+              <td>{{this.thumbnail}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        {{else}}
+        <h3>No hayproductos para mostrar!</h3>
+        {{/if}}
+    </div>
+
+</div>
