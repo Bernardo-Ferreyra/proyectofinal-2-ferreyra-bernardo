@@ -100,13 +100,12 @@ addForm.addEventListener('submit', evt => {
 
 socket.on('productAdded', (newData) => {
     if(newData.status === 'error'){
-        let errorMesg = newData.message
         Swal.fire({
             title: 'No se pudo agregar el producto',
-            text: newData.message,
+            text: `${newData.message}`,
             icon: 'error'
         })
-        return {status: 'error', errorMesg}
+        return {status: 'error', message: 'No se pudo agregar el producto'}
     }
     let list
     newData.forEach(({_id, title, code, price, category, description, stock, thumbnail}) => {

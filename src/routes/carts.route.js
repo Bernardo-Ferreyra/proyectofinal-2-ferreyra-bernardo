@@ -2,7 +2,8 @@ const {Router} = require('express')
 /* const CartManager = require('../DAO/fileSystem/cartsManager.js') */ //fileSystem
 /* const ProductManager = require('../DAO/fileSystem/productManager.js') */  //fileSystem
 const CartManagerMongo= require('../DAO/mongo/cart.mongo.js');
-const ProductManagerMongo = require('../DAO/mongo/product.mongo.js');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 const router = Router()
 
@@ -50,6 +51,10 @@ router.post('/:cid/products/:pid', async(req, res)=>{
     try{
         const cid = req.params.cid
         const pid = req.params.pid
+        const isValidObjectId = ObjectId.isValid(pid)
+        if (!isValidObjectId) {
+          return res.status(404).send({ message: `El ID del producto es inválido`})
+        }
         const cart = await cartsManager.getCartById(cid)
         if(Object.keys(cart).length === 0){
             return res.status(404).send({ message: `El carrito con ID ${cid} no existe` })

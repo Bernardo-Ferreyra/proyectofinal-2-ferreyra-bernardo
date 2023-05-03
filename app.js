@@ -38,19 +38,22 @@ socketServer.on('connection', socket=>{
 	console.log("cliente conectado")
 	
 	socket.on('deleteProduct', async (pid)=>{
-		const isValidObjectId = ObjectId.isValid(pid.id);
-		if (!isValidObjectId) {
-		  return socket.emit('newList', {status: "error", message: `El ID del producto es inválido`})
+		try{
+			const isValidObjectId = ObjectId.isValid(pid.id);
+			if (!isValidObjectId) {
+			  return socket.emit('newList', {status: "error", message: `El ID del producto es inválido`})
+			}
+		  
+			const product = await productsManager.getProductById(pid.id)
+			if(product) {
+			  await productsManager.deleteProduct(pid.id)
+			  const data = await productsManager.getProducts()
+			  return socket.emit('newList', data)
+			}
+			return socket.emit('newList', {status: "error", message: `El producto con ID ${pid.id} no existe`})
+		}catch(err){
+			console.log(err)
 		}
-	  
-		const product = await productsManager.getProductById(pid.id)
-		console.log(product)
-		if(product) {
-		  await productsManager.deleteProduct(pid.id)
-		  const data = await productsManager.getProducts()
-		  return socket.emit('newList', data)
-		}
-		return socket.emit('newList', {status: "error", message: `El producto con ID ${pid.id} no existe`})
 	})
 
 
@@ -59,24 +62,12 @@ socketServer.on('connection', socket=>{
 	socket.on('addProduct', async (data) => {
 		try {
 			const newProduct = await productsManager.addProduct(data);
-			console.log(newProduct);
 			const newData = await productsManager.getProducts();
 			return socket.emit('productAdded', newData);
 		} catch (error) {
-			console.error(error);
-			let errorMesg = error.message;
-			return socket.emit('productAdded', { status: 'error', errorMesg });
+			return socket.emit('productAdded', { status: 'error', message: `El code: ${data.code} ya existe!`});
 		}
     })
 
 })
 
-
-/* const newProduct = await productsManager.addProduct(data)
-console.log(newProduct)
-if(newProduct.status === 'error'){
-	let errorMesg = newProduct.message
-	socket.emit('productAdded', {status:'error', errorMesg})
-}
-const newData = await productsManager.getProducts()
-return socket.emit('productAdded', newData) */
