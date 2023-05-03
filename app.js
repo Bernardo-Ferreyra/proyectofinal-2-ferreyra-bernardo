@@ -61,7 +61,7 @@ socketServer.on('connection', socket=>{
 	
 	socket.on('addProduct', async (data) => {
 		try {
-			const newProduct = await productsManager.addProduct(data);
+			await productsManager.addProduct(data);
 			const newData = await productsManager.getProducts();
 			return socket.emit('productAdded', newData);
 		} catch (error) {
@@ -71,3 +71,17 @@ socketServer.on('connection', socket=>{
 
 })
 
+
+//chat
+let messages = []
+socketServer.on('connection', socket => {
+    socket.on('message', data => {
+        messages.push(data)
+        socketServer.emit('messageLogs', messages)
+    })
+
+    socket.on('authenticated', data => {
+        socket.broadcast.emit('newUserConnected', data)
+    })
+
+})
