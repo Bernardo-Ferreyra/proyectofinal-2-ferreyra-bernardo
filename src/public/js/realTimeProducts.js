@@ -34,10 +34,10 @@ socket.on('newList', data => {
     }
 
     let list
-    data.forEach(({id, title, code, price, category, description, stock, thumbnail}) => {
+    data.forEach(({_id, title, code, price, category, description, stock, thumbnail}) => {
         list +=`
         <tr>
-        <td>${id}</td>
+        <td>${_id}</td>
         <td>${title}</td>
         <td>${code}</td>
         <td>${price}</td>
@@ -109,10 +109,10 @@ socket.on('productAdded', (newData) => {
         return {status: 'error', errorMesg}
     }
     let list
-    newData.forEach(({id, title, code, price, category, description, stock, thumbnail}) => {
+    newData.forEach(({_id, title, code, price, category, description, stock, thumbnail}) => {
         list +=`
         <tr>
-        <td>${id}</td>
+        <td>${_id}</td>
         <td>${title}</td>
         <td>${code}</td>
         <td>${price}</td>
