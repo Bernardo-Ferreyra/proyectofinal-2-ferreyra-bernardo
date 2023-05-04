@@ -2,14 +2,15 @@ const express = require('express');
 const routerServer= require('./src/routes/index.js')
 const { connectDb }= require('./src/config/configServer.js')
 const handlebars = require('express-handlebars')
-/* const ProductManager = require('./src/DAO/fileSystem/productManager.js') */ //fileSystem
 const ProductManagerMongo= require('./src/DAO/mongo/product.mongo.js')
+const ChatManagerMongo = require('./src/DAO/mongo/chat.mongo.js')
 const {Server}= require('socket.io')
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
+const mongoose = require('mongoose')
+/* const ProductManager = require('./src/DAO/fileSystem/productManager.js') */ //fileSystem
+const ObjectId = mongoose.Types.ObjectId
 
 const PORT = 8080;
-const app = express();
+const app = express()
 
 connectDb();
 
@@ -18,7 +19,8 @@ const httpServer = app.listen(PORT, () => {
 });
 
 /* const productsManager = new ProductManager('./products.json'); */ //fileSystem
-const productsManager = new ProductManagerMongo;
+const productsManager = new ProductManagerMongo
+const messageManager = new ChatManagerMongo
 const socketServer = new Server(httpServer)
 
 //hbs
@@ -28,7 +30,7 @@ app.set('view engine', 'handlebars')
 
 
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static(__dirname+'/src/public'))
 
 app.use(routerServer)
@@ -39,7 +41,7 @@ socketServer.on('connection', socket=>{
 	
 	socket.on('deleteProduct', async (pid)=>{
 		try{
-			const isValidObjectId = ObjectId.isValid(pid.id);
+			const isValidObjectId = ObjectId.isValid(pid.id)
 			if (!isValidObjectId) {
 			  return socket.emit('newList', {status: "error", message: `El ID del producto es inválido`})
 			}
@@ -62,10 +64,10 @@ socketServer.on('connection', socket=>{
 	socket.on('addProduct', async (data) => {
 		try {
 			await productsManager.addProduct(data);
-			const newData = await productsManager.getProducts();
-			return socket.emit('productAdded', newData);
+			const newData = await productsManager.getProducts()
+			return socket.emit('productAdded', newData)
 		} catch (error) {
-			return socket.emit('productAdded', { status: 'error', message: `El code: ${data.code} ya existe!`});
+			return socket.emit('productAdded', { status: 'error', message: `El code: ${data.code} ya existe!`})
 		}
     })
 
@@ -73,11 +75,15 @@ socketServer.on('connection', socket=>{
 
 
 //chat
-let messages = []
 socketServer.on('connection', socket => {
-    socket.on('message', data => {
-        messages.push(data)
-        socketServer.emit('messageLogs', messages)
+    socket.on('message', async(data) => {
+		try{
+			await messageManager.saveMessages(data)
+			const messages = await messageManager.getMessages()
+			socketServer.emit('messageLogs', messages)
+		}catch(error){
+			console.log(error)
+		}
     })
 
     socket.on('authenticated', data => {
