@@ -4,10 +4,17 @@ const collection= 'carts'
 
 const cartSchema = new Schema({
     products: [{
-        idProduct: { type: String, required: true },
-        cantidad: { type: Number, required: true },
+        product:{
+            type: Schema.Types.ObjectId,
+            ref: 'products',
+        },
+        cantidad:{ type: Number, required: true },
         _id: false
     }]
+})
+
+cartSchema.pre('findOne', function(){
+    this.populate('products.product')
 })
 
 

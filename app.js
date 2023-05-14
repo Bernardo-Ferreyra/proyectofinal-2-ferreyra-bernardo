@@ -6,7 +6,8 @@ const ProductManagerMongo= require('./src/DAO/mongo/product.mongo.js')
 const ChatManagerMongo = require('./src/DAO/mongo/chat.mongo.js')
 const {Server}= require('socket.io')
 const mongoose = require('mongoose')
-/* const ProductManager = require('./src/DAO/fileSystem/productManager.js') */ //fileSystem
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 const ObjectId = mongoose.Types.ObjectId
 
 const PORT = 8080;
@@ -18,7 +19,6 @@ const httpServer = app.listen(PORT, () => {
 	console.log(`Escuchando en el puerto ${PORT}`);
 });
 
-/* const productsManager = new ProductManager('./products.json'); */ //fileSystem
 const productsManager = new ProductManagerMongo
 const messageManager = new ChatManagerMongo
 const socketServer = new Server(httpServer)
@@ -32,6 +32,13 @@ app.set('view engine', 'handlebars')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static(__dirname+'/src/public'))
+
+app.use(cookieParser())
+app.use(session({
+	secret: 'secretCoder',
+	resave: true,
+	saveUninitialized: true
+}))
 
 app.use(routerServer)
 

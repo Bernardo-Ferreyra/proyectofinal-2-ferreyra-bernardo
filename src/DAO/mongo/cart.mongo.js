@@ -19,34 +19,84 @@ class CartManagerMongo{
         }
     }
 
-    async getCartById(id){
+    async getCartById(cid){
         try{
-            return await cartModel.findOne({_id: id});
+            return await cartModel.findOne({_id: cid}).lean();
         }catch(err){
-            return new Error(err)
+            console.log(err)
         }
     }
 
-    async addToCart(cid, pid){
+    async addToCart(cid, pid, cantidad){
         try{
-            const cart = await cartModel.findOne({_id: cid})
-            const product = cart.products.find(producto => producto.idProduct === pid);
-            if(!product){
-                return await cartModel.updateOne(
-                    {_id: cid},
-                    { $push: { products: { idProduct: pid, cantidad: 15 } } }
-                )
-            }else{
-                return await cartModel.updateOne(
-                    {_id: cid, "products.idProduct": pid },
-                    { $inc: { "products.$.cantidad": 2 } }
-                )
+            const respUpdate= await cartModel.findOneAndUpdate(
+                {_id: cid,"products.product": pid},
+                { $inc: { "products.$.cantidad": cantidad } },
+                {new:true}
+            )
+            if(respUpdate){
+                return respUpdate
             }
+
+            return await cartModel.findOneAndUpdate(
+                {_id: cid},
+                { $push: { products: { product: pid, cantidad} } },
+                {new:true, upsert:true}
+            )
         }catch(err){
-            return new Error(err)
+            console.log(err)
         }
     }
 
+
+    async deleteProductFromCart(cid, pid){
+        try{
+            return await cartModel.findOneAndUpdate(
+                {_id:cid},
+                {$pull: {products:{product:pid}}},
+                {new:true}
+            )
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    async emptyCart(cid){
+        try{
+            return await cartModel.findOneAndUpdate(
+                {_id:cid},
+                {$set: {products:[]}},
+                {new:true}
+            )
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    async modifyProductFromCart(cid, pid, cantidad){
+        try{
+            return await cartModel.findOneAndUpdate(
+                {_id: cid,"products.product": pid},
+                { $set: { "products.$.cantidad": cantidad } },
+                {new:true}
+            )
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+
+    async modifyCart(cid, newCart){
+        try{
+            return await cartModel.findOneAndUpdate(
+                {_id:cid},
+                {$set: {products: newCart}},
+                {new:true}
+            )
+        }catch(err){
+            console.log(err)
+        }
+    }
 }
 
 

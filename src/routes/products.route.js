@@ -1,19 +1,54 @@
 const {Router} = require('express')
-/* const ProductManager = require('../DAO/fileSystem/productManager.js') */ //fileSystem
 const ProductManagerMongo= require('../DAO/mongo/product.mongo.js')
+const { productModel } = require('../DAO/models/product.model.js')
 
 const router = Router()
-/* const productsManager = new ProductManager('./products.json'); */ //fileSystem
 const productsManager = new ProductManagerMongo ;
 
 
 router.get('/', async (req, res) => {
 	try{
-		const limit = req.query.limit
-		const products = await productsManager.getProducts();
-		limit 
-        ? res.send(products.slice(0, limit)) 
-        : res.send(products);  
+        const {limit= 2}= req.query
+        const{page=1} = req.query
+        const { sort } = req.query;
+        let sortOptions={}
+
+        if (sort === 'asc') {
+            sortOptions = { price: 1 };
+        } else if (sort === 'desc') {
+            sortOptions = { price: -1 };
+        }
+
+        let { 
+            docs, 
+            totalPages,
+            prevPage, 
+            nextPage,
+            hasPrevPage, 
+            hasNextPage 
+        } = await productModel.paginate({},{limit: limit , page: page, sort: sortOptions})
+
+        !hasPrevPage
+        ? prevLink = null
+        : prevLink =`/api/products?page=${prevPage}&limit=${limit}&sort=${sort}`
+
+        !hasNextPage 
+        ?nextLink = null
+        :nextLink =`/api/products?page=${nextPage}&limit=${limit}&sort=${sort}`
+
+
+        res.send({
+            status: 'success',
+            payload: docs,
+            totalPages,
+            prevPage,
+            nextPage,
+            page,
+            hasPrevPage,
+            hasNextPage,
+            prevLink,
+            nextLink
+        })
 	} catch(err){
 	    console.log(err)
 	}
