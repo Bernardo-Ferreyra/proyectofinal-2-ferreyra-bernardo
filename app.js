@@ -8,6 +8,7 @@ const {Server}= require('socket.io')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const FileStore = require('session-file-store')
 const ObjectId = mongoose.Types.ObjectId
 
 const PORT = 8080;
@@ -34,7 +35,21 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static(__dirname+'/src/public'))
 
 app.use(cookieParser())
+
+
+/* app.use(session({
+	secret: 'secretCoder',
+	resave: true,
+	saveUninitialized: true
+})) */
+const fileStore = FileStore(session)
+
 app.use(session({
+	store: new fileStore({
+		ttl: 100000*60,
+		path: './session',
+		retries: 0
+	}),
 	secret: 'secretCoder',
 	resave: true,
 	saveUninitialized: true
