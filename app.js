@@ -9,6 +9,7 @@ const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const FileStore = require('session-file-store')
+const MongoStore = require('connect-mongo')
 const ObjectId = mongoose.Types.ObjectId
 
 const PORT = 8080;
@@ -34,7 +35,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static(__dirname+'/src/public'))
 
-app.use(cookieParser())
+app.use(cookieParser('secreet'))
 
 
 /* app.use(session({
@@ -45,14 +46,18 @@ app.use(cookieParser())
 const fileStore = FileStore(session)
 
 app.use(session({
-	store: new fileStore({
+	store: MongoStore.create({
 		ttl: 100000*60,
-		path: './session',
-		retries: 0
+		mongoUrl: 'mongodb+srv://berniiferreyra:Felipeyara338@cluster0.d9ot40r.mongodb.net/?retryWrites=true&w=majority',
+		mongoOptions: {
+			useNewUrlParser: true,
+			useUnifiedTopology: true
+		}
+
 	}),
 	secret: 'secretCoder',
-	resave: true,
-	saveUninitialized: true
+	resave: false,
+	saveUninitialized: false
 }))
 
 app.use(routerServer)

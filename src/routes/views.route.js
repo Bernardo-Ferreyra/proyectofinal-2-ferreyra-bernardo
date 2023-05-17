@@ -118,4 +118,22 @@ router.get('/carts/:cid', async(req,res)=>{
     }
 
 })
+
+
+
+router.get('/api/session/login', (req,res)=>{
+    res.render('login',{
+        
+    })
+})
+
+router.get('/api/session/register', (req,res)=>{
+    res.render('registerForm',{
+
+    })
+})
+
+
+
+
 module.exports = router
