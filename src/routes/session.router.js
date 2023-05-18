@@ -17,21 +17,21 @@ router.post('/login', async(req, res)=>{
     }
 
     const userDB = await userModel.findOne({email, password})
-    if(!userDB) return res.status(404).send({status: 'error', message: 'usuario inexistente'})
+    if(!userDB) return res.status(404).send({status: 'error', message: 'usuario o contraseña incorrectos'})
 
     req.session.user ={
         first_name: userDB.first_name,
         last_name: userDB.last_name,
         email: userDB.email,
+        date_of_birth: userDB.date_of_birth,
         role: role
     }
 
     res.redirect('/')
-    console.log(userDB)
 })
 
 router.post('/register',async(req,res)=>{ //ACA
-    const{username, first_name, last_name, email, password} = req.body
+    const{username, first_name, last_name, email, date_of_birth, password} = req.body
     const existUser= await userModel.findOne({email})
     if(existUser) return res.send({status: 'error', message:'el email ya existe'})
 
@@ -40,14 +40,15 @@ router.post('/register',async(req,res)=>{ //ACA
         first_name,
         last_name,
         email,
+        date_of_birth,
         password
     }
 
     await userModel.create(newUser)
 
-
     res.status(200).send('registro exitoso')
 })
+
 
 router.get('/logout',(req,res)=>{
     req.session.destroy(err=>{
@@ -55,7 +56,6 @@ router.get('/logout',(req,res)=>{
             res.send({status: 'error', error: err})
         }
         res.redirect('login')
-        console.log(req.session)
     })
 })
 

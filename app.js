@@ -4,11 +4,10 @@ const { connectDb }= require('./src/config/configServer.js')
 const handlebars = require('express-handlebars')
 const ProductManagerMongo= require('./src/DAO/mongo/product.mongo.js')
 const ChatManagerMongo = require('./src/DAO/mongo/chat.mongo.js')
-const {Server}= require('socket.io')
+const { Server }= require('socket.io')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const FileStore = require('session-file-store')
 const MongoStore = require('connect-mongo')
 const ObjectId = mongoose.Types.ObjectId
 
@@ -36,14 +35,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static(__dirname+'/src/public'))
 
 app.use(cookieParser('secreet'))
-
-
-/* app.use(session({
-	secret: 'secretCoder',
-	resave: true,
-	saveUninitialized: true
-})) */
-/* const fileStore = FileStore(session) */
 
 app.use(session({
 	store: MongoStore.create({

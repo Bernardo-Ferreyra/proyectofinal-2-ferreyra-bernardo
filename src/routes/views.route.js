@@ -19,7 +19,6 @@ router.get('/', async(req,res)=>{
         : products = result
 
         let user = req.session.user
-        console.log(user)
 
         res.render('home', {
             title: "Lista de Productos",
