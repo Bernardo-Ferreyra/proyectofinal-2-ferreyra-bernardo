@@ -1,13 +1,10 @@
 const {Router} = require('express')
-/* const ProductManager = require('../DAO/fileSystem/productManager.js') */ //fileSystem
 const ProductManagerMongo= require('../DAO/mongo/product.mongo.js')
 const CartManagerMongo= require('../DAO/mongo/cart.mongo.js');
 const { productModel } = require('../DAO/models/product.model.js')
 
-
-
 const router = Router()
-/* const productsManager = new ProductManager('./products.json'); */  //fileSystem
+
 const productsManager = new ProductManagerMongo;
 const cartsManager = new CartManagerMongo;
 
@@ -20,9 +17,14 @@ router.get('/', async(req,res)=>{
         limit
         ? products = result.slice(0, limit)
         : products = result
+
+        let user = req.session.user
+        console.log(user)
+
         res.render('home', {
             title: "Lista de Productos",
-            products
+            products,
+            user
         })
 
     }catch(err){
@@ -42,12 +44,6 @@ router.get('/realTimeProducts', async(req, res)=>{
         console.log(err)
     }
 })
-
-router.get('/chat', (req, res)=>{
-    res.render('chat', {})
-})
-
-
 
 
 router.get('/products', async(req,res)=>{
@@ -120,19 +116,17 @@ router.get('/carts/:cid', async(req,res)=>{
 })
 
 
+router.get('/chat', (req, res)=>{
+    res.render('chat', {})
+})
 
 router.get('/api/session/login', (req,res)=>{
-    res.render('login',{
-        
-    })
+    res.render('login',{})
 })
 
 router.get('/api/session/register', (req,res)=>{
-    res.render('registerForm',{
-
-    })
+    res.render('registerForm',{})
 })
-
 
 
 

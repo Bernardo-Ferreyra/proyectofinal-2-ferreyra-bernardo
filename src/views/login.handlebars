@@ -3,11 +3,11 @@
     {{!-- <form id='cookieForm' onsubmit='return false'> --}}
     <form id='cookieForm' action='/api/session/login' method="POST">
         <label for="username">email</label>
-        <input name="email">
+        <input type="email" name="email" required placeholder="example@example">
         <br>
         <label for="email">pass</label>
         {{!-- <input name="email"> --}}
-        <input name="password">
+        <input type="password" name="password" required placeholder="*******">
         <input type="submit">
         </form>
     {{!-- <button onclick="getCookie()">ver cookie</button> --}}

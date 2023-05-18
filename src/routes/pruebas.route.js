@@ -1,4 +1,4 @@
-const {Router} = require('express')
+/* const {Router} = require('express')
 const {auth} = require('../middlewares/autenticacion.middleware.js')
 
 const router= Router()
@@ -52,4 +52,4 @@ router.post('/session', (req,res)=>{
 })
 
 
-module.exports = router
+module.exports = router */

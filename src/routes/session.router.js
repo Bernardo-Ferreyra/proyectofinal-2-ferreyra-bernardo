@@ -4,23 +4,33 @@ const { userModel } = require('../DAO/models/user.model.js')
 const router= Router()
 
 router.post('/login', async(req, res)=>{
-    const {email, password} = req.body
-    const userDB = await userModel.findOne({email, password})
+    let {email, password} = req.body
+    email = email.trim();
+    password = password.trim();
+    if (!email || !password) {
+        return res.status(400).send({ status: 'error', message: 'El email y la contraseña son obligatorios' });
+    }
 
-    if(!userDB) return res.send({status: 'error', message: 'no existe'})
+    let role = 'user';
+    if (email === 'adminCoder@coder.com' && password === 'adminCod3r123') {
+      role = 'admin';
+    }
+
+    const userDB = await userModel.findOne({email, password})
+    if(!userDB) return res.status(404).send({status: 'error', message: 'usuario inexistente'})
 
     req.session.user ={
         first_name: userDB.first_name,
         last_name: userDB.last_name,
         email: userDB.email,
-        role: 'admin'
+        role: role
     }
 
-
-    res.send({message: 'login  es success'})
+    res.redirect('/')
+    console.log(userDB)
 })
 
-router.post('/register',async(req,res)=>{
+router.post('/register',async(req,res)=>{ //ACA
     const{username, first_name, last_name, email, password} = req.body
     const existUser= await userModel.findOne({email})
     if(existUser) return res.send({status: 'error', message:'el email ya existe'})
@@ -33,7 +43,7 @@ router.post('/register',async(req,res)=>{
         password
     }
 
-    let resultUser= await userModel.create(newUser)
+    await userModel.create(newUser)
 
 
     res.status(200).send('registro exitoso')
@@ -44,7 +54,8 @@ router.get('/logout',(req,res)=>{
         if(err){
             res.send({status: 'error', error: err})
         }
-        res.send('logout ok')
+        res.redirect('login')
+        console.log(req.session)
     })
 })
 

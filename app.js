@@ -43,7 +43,7 @@ app.use(cookieParser('secreet'))
 	resave: true,
 	saveUninitialized: true
 })) */
-const fileStore = FileStore(session)
+/* const fileStore = FileStore(session) */
 
 app.use(session({
 	store: MongoStore.create({
@@ -63,6 +63,7 @@ app.use(session({
 app.use(routerServer)
 
 
+//realtimeproducts
 socketServer.on('connection', socket=>{
 	console.log("cliente conectado")
 	
