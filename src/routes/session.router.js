@@ -24,6 +24,7 @@ router.post('/login', async(req, res)=>{
         last_name: userDB.last_name,
         email: userDB.email,
         date_of_birth: userDB.date_of_birth,
+        username: userDB.username,
         role: role
     }
 
@@ -41,6 +42,7 @@ router.post('/register',async(req,res)=>{ //ACA
         last_name,
         email,
         date_of_birth,
+        username,
         password
     }
 
