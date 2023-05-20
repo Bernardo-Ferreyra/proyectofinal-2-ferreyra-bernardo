@@ -49,6 +49,7 @@ router.post('/register',async(req,res)=>{ //ACA
     await userModel.create(newUser)
 
     res.status(200).send('registro exitoso')
+    
 })
 
 
