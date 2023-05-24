@@ -8,7 +8,9 @@ const { Server }= require('socket.io')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const MongoStore = require('connect-mongo')
+const MongoStore = require('connect-mongo');
+const { initPassportMid, initPassportGithub } = require('./src/config/passportConfig.js');
+const passport = require('passport');
 const ObjectId = mongoose.Types.ObjectId
 
 const PORT = 8080;
@@ -50,6 +52,13 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false
 }))
+
+
+/* initPassportMid() */
+initPassportGithub()
+passport.use(passport.initialize())
+passport.use(passport.session())
+
 
 app.use(routerServer)
 

@@ -1,6 +1,8 @@
 const {Router} = require('express')
 const {auth} = require('../middlewares/autenticacion.middleware.js')
 const { userModel } = require('../DAO/models/user.model.js')
+const { createHash, isValidPassword } = require('../utils/bcryptHash.js')
+const passport = require('passport')
 const router= Router()
 
 router.post('/login', async(req, res)=>{
@@ -16,8 +18,10 @@ router.post('/login', async(req, res)=>{
       role = 'admin';
     }
 
-    const userDB = await userModel.findOne({email, password})
+    const userDB = await userModel.findOne({email})
     if(!userDB) return res.status(404).send({status: 'error', message: 'usuario o contraseña incorrectos'})
+
+    if(!isValidPassword(password, userDB)) return res.status(401).send({status:'error', message:'usuario o contraseña incorrectos'})
 
     req.session.user ={
         first_name: userDB.first_name,
@@ -31,7 +35,7 @@ router.post('/login', async(req, res)=>{
     res.redirect('/')
 })
 
-router.post('/register',async(req,res)=>{ //ACA
+/* router.post('/register',async(req,res)=>{ //ACA
     const{username, first_name, last_name, email, date_of_birth, password} = req.body
     const existUser= await userModel.findOne({email})
     if(existUser) return res.send({status: 'error', message:'el email ya existe'})
@@ -43,15 +47,33 @@ router.post('/register',async(req,res)=>{ //ACA
         email,
         date_of_birth,
         username,
-        password
+        password : createHash(password)
     }
 
     await userModel.create(newUser)
 
     res.status(200).send('registro exitoso')
     
+}) */
+
+router.post('/register', passport.authenticate('register',{
+    failureRedirect: '/failregister',
+    /* successRedirect */
+    }), async(req,res)=>{
+        res.send({status: 'success', message:'user registered'})
 })
 
+router.get('/failregister', async(req,res)=>{
+    console.log('fallo')
+    res.send({status: 'error', message:'fallo atenticacion'})
+})
+
+router.get('/github', passport.authenticate('github', {scope:['user:email']}))
+
+router.get('/githubcallback',passport.authenticate('github',{failureRedirect:'/api/session/login'}), async(req,res)=>{
+    req.session.user=req.user
+    res.redirect('/')
+})
 
 router.get('/logout',(req,res)=>{
     req.session.destroy(err=>{
