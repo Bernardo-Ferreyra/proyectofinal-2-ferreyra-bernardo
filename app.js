@@ -9,7 +9,8 @@ const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
-const { initPassportMid, initPassportGithub } = require('./src/config/passportConfig.js');
+const { initPassportGithub } = require('./src/config/passportConfig.js');
+const { initPassport } = require('./src/config/passport-jwt-config.js');
 const passport = require('passport');
 const ObjectId = mongoose.Types.ObjectId
 
@@ -36,7 +37,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static(__dirname+'/src/public'))
 
-app.use(cookieParser('secreet'))
+app.use(cookieParser('palabrasecreta'))
 
 app.use(session({
 	store: MongoStore.create({
@@ -48,13 +49,13 @@ app.use(session({
 		}
 
 	}),
-	secret: 'secretCoder',
+	secret: 'palabrasecreta',
 	resave: false,
 	saveUninitialized: false
 }))
 
-
-/* initPassportMid() */
+//Passport
+initPassport()
 initPassportGithub()
 passport.use(passport.initialize())
 passport.use(passport.session())

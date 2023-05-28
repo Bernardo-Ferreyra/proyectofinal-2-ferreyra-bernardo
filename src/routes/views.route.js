@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const ProductManagerMongo= require('../DAO/mongo/product.mongo.js')
 const CartManagerMongo= require('../DAO/mongo/cart.mongo.js');
-const { productModel } = require('../DAO/models/product.model.js')
+const { productModel } = require('../DAO/models/product.model.js');
 
 const router = Router()
 
@@ -10,7 +10,6 @@ const cartsManager = new CartManagerMongo;
 
 router.get('/', async(req,res)=>{
     try{
-
         const limit = req.query.limit
         const result = await productsManager.getProducts()
         let products
