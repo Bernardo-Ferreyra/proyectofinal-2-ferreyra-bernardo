@@ -53,6 +53,11 @@ class SessionController {
 
         const newCart = {products:[]}
         const cart= await cartsManager.createCart(newCart)
+
+        let role = userModel.schema.path('role').default()
+        if(email === 'adminCoder@coder.com'){
+            role = "admin"
+        }
     
         const newUser={
             username,
@@ -61,7 +66,7 @@ class SessionController {
             email,
             date_of_birth,
             cart: cart._id,
-            role: 'user',
+            role: role,
             password : createHash(password)
         }
         await userModel.create(newUser)
