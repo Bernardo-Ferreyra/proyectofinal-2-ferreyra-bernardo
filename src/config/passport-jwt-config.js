@@ -3,7 +3,7 @@ const {Strategy, ExtractJwt} = require('passport-jwt')
 const configServer = require('./configServer.js')
 
 const JWTStrategy = Strategy
-const extractJWT = ExtractJwt
+const ExtractJWT = ExtractJwt
 
 const cookieExtractor = req =>{
     let token= null
@@ -14,12 +14,12 @@ const cookieExtractor = req =>{
 }
 
 const configStrategy = {
-    jwtFromRequest: extractJWT.fromExtractors([cookieExtractor]),
+    jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
     secretOrKey: configServer.jwt_secret_key
 }
 
 const initPassport= ()=>{
-    passport.use('jwt', new JWTStrategy(configStrategy, async(jwt_payload, done)=>{
+    passport.use('current', new JWTStrategy(configStrategy, async(jwt_payload, done)=>{
         try {
             return done(null, jwt_payload)
         } catch (error) {

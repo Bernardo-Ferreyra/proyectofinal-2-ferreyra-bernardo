@@ -1,4 +1,4 @@
-const { Schema, model }= require('mongoose')
+const { Schema, model, SchemaType }= require('mongoose')
 
 const collection = 'usuarios'
 
@@ -24,6 +24,14 @@ const userSchema = new Schema({
     username:{
         type: String,
         required: true
+    },
+    role:{
+        type: String,
+        default: 'user'
+    },
+    cart:{
+        type: Schema.Types.ObjectId,
+        ref: 'carts',
     },
     password:{
         type: String,
