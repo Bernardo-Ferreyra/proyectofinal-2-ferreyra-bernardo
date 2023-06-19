@@ -1,4 +1,4 @@
-const { Schema, model, SchemaType }= require('mongoose')
+const { Schema, model }= require('mongoose')
 
 const collection = 'usuarios'
 
@@ -41,8 +41,6 @@ const userSchema = new Schema({
 
 
 
+const UserModel= model(collection, userSchema)
 
-
-const userModel= model(collection, userSchema)
-
-module.exports = { userModel }
+module.exports = { UserModel }

@@ -1,19 +1,17 @@
 const express = require('express');
-const routerServer= require('./src/routes/index.js')
-const { connectDb }= require('./src/config/configServer.js')
-const handlebars = require('express-handlebars')
-const ProductManagerMongo= require('./src/DAO/mongo/product.mongo.js')
-const ChatManagerMongo = require('./src/DAO/mongo/chat.mongo.js')
-const { Server }= require('socket.io')
 const mongoose = require('mongoose')
+const handlebars = require('express-handlebars')
+const { Server }= require('socket.io')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const routerServer= require('./src/routes/index.js')
+const { connectDb }= require('./src/config/configServer.js')
 const { initPassportGithub } = require('./src/config/passportConfig.js');
 const { initPassport } = require('./src/config/passport-jwt-config.js');
-const passport = require('passport');
+const { productService, chatService } = require('./src/services/Services.js');
 const ObjectId = mongoose.Types.ObjectId
-
 const PORT = 8080;
 const app = express()
 
@@ -23,8 +21,6 @@ const httpServer = app.listen(PORT, () => {
 	console.log(`Escuchando en el puerto ${PORT}`);
 });
 
-const productsManager = new ProductManagerMongo
-const messageManager = new ChatManagerMongo
 const socketServer = new Server(httpServer)
 
 //hbs
@@ -63,7 +59,6 @@ passport.use(passport.session())
 
 app.use(routerServer)
 
-
 //realtimeproducts
 socketServer.on('connection', socket=>{
 	console.log("cliente conectado")
@@ -75,10 +70,10 @@ socketServer.on('connection', socket=>{
 			  return socket.emit('newList', {status: "error", message: `El ID del producto es inválido`})
 			}
 		  
-			const product = await productsManager.getProductById(pid.id)
+			const product = await productService.getProductById(pid.id)
 			if(product) {
-			  await productsManager.deleteProduct(pid.id)
-			  const data = await productsManager.getProducts()
+			  await productService.deleteProduct(pid.id)
+			  const data = await productService.getProducts()
 			  return socket.emit('newList', data)
 			}
 			return socket.emit('newList', {status: "error", message: `El producto con ID ${pid.id} no existe`})
@@ -87,13 +82,10 @@ socketServer.on('connection', socket=>{
 		}
 	})
 
-
-
-	
 	socket.on('addProduct', async (data) => {
 		try {
-			await productsManager.addProduct(data);
-			const newData = await productsManager.getProducts()
+			await productService.addProduct(data);
+			const newData = await productService.getProducts()
 			return socket.emit('productAdded', newData)
 		} catch (error) {
 			return socket.emit('productAdded', { status: 'error', message: `El code: ${data.code} ya existe!`})
@@ -101,14 +93,15 @@ socketServer.on('connection', socket=>{
     })
 
 })
-
+ 
 
 //chat
 socketServer.on('connection', socket => {
+
     socket.on('message', async(data) => {
 		try{
-			await messageManager.saveMessages(data)
-			const messages = await messageManager.getMessages()
+			await chatService.saveMessages(data)
+			const messages = await chatService.getMessages()
 			socketServer.emit('messageLogs', messages)
 		}catch(error){
 			console.log(error)

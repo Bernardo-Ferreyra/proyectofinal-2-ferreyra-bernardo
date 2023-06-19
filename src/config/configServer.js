@@ -1,10 +1,8 @@
 const { connect } = require('mongoose')
-
+const { MongoSingleton } = require('../utils/sinlgeton')
+require('dotenv').config()
 
 module.exports={
-    jwt_secret_key: 'palabrasecreta',
-    connectDb: ()=>{
-        connect('mongodb+srv://berniiferreyra:Felipeyara338@cluster0.d9ot40r.mongodb.net/?retryWrites=true&w=majority')
-        console.log('base de datos conectada')
-    }
+    jwt_secret_key: process.env.JWT_SECRET_KEY,
+    connectDb: async()=> await MongoSingleton.getInstance()
 }

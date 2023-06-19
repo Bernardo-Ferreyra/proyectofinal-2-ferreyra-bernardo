@@ -1,11 +1,12 @@
-const { cartModel } = require('../models/cart.model.js')
-
+const { CartModel } = require('../models/cart.model.js')
 
 class CartManagerMongo{
-
+    constructor(){
+        this.cartModel= CartModel
+    }
     async getCarts(){
         try{
-            return await cartModel.find({})
+            return await this.cartModel.find({})
         }catch(err){
             return new Error(err)
         }
@@ -13,7 +14,7 @@ class CartManagerMongo{
 
     async createCart(newCart){
         try{
-            return await cartModel.create(newCart)
+            return await this.cartModel.create(newCart)
         }catch(err){
             return new Error(err)
         }
@@ -21,7 +22,7 @@ class CartManagerMongo{
 
     async getCartById(cid){
         try{
-            return await cartModel.findOne({_id: cid}).lean();
+            return await this.cartModel.findOne({_id: cid}).lean();
         }catch(err){
             console.log(err)
         }
@@ -29,7 +30,7 @@ class CartManagerMongo{
 
     async addToCart(cid, pid, cantidad){
         try{
-            const respUpdate= await cartModel.findOneAndUpdate(
+            const respUpdate= await this.cartModel.findOneAndUpdate(
                 {_id: cid,"products.product": pid},
                 { $inc: { "products.$.cantidad": cantidad } },
                 {new:true}
@@ -38,7 +39,7 @@ class CartManagerMongo{
                 return respUpdate
             }
 
-            return await cartModel.findOneAndUpdate(
+            return await this.cartModel.findOneAndUpdate(
                 {_id: cid},
                 { $push: { products: { product: pid, cantidad} } },
                 {new:true, upsert:true}
@@ -51,7 +52,7 @@ class CartManagerMongo{
 
     async deleteProductFromCart(cid, pid){
         try{
-            return await cartModel.findOneAndUpdate(
+            return await this.cartModel.findOneAndUpdate(
                 {_id:cid},
                 {$pull: {products:{product:pid}}},
                 {new:true}
@@ -63,7 +64,7 @@ class CartManagerMongo{
 
     async emptyCart(cid){
         try{
-            return await cartModel.findOneAndUpdate(
+            return await this.cartModel.findOneAndUpdate(
                 {_id:cid},
                 {$set: {products:[]}},
                 {new:true}
@@ -75,7 +76,7 @@ class CartManagerMongo{
 
     async modifyProductFromCart(cid, pid, cantidad){
         try{
-            return await cartModel.findOneAndUpdate(
+            return await this.cartModel.findOneAndUpdate(
                 {_id: cid,"products.product": pid},
                 { $set: { "products.$.cantidad": cantidad } },
                 {new:true}
@@ -88,7 +89,7 @@ class CartManagerMongo{
 
     async modifyCart(cid, newCart){
         try{
-            return await cartModel.findOneAndUpdate(
+            return await this.cartModel.findOneAndUpdate(
                 {_id:cid},
                 {$set: {products: newCart}},
                 {new:true}

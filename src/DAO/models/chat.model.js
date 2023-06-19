@@ -13,6 +13,6 @@ const chatSchema = new Schema({
     }
 })
 
-const chatModel = model(collection, chatSchema)
+const ChatModel = model(collection, chatSchema)
 
-module.exports = { chatModel }
+module.exports = { ChatModel }

@@ -18,7 +18,7 @@ cartSchema.pre('findOne', function(){
 })
 
 
-const cartModel= model(collection, cartSchema)
+const CartModel= model(collection, cartSchema)
 
-module.exports = { cartModel }
+module.exports = { CartModel }
 
