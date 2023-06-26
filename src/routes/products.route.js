@@ -4,7 +4,7 @@ const router = Router()
 
 router.get('/', productController.getProducts);
 
-router.post('/' , productController.addProduct);
+router.post('/' , productController.createProduct);
 
 router.get('/:pid', productController.getProductById);
 

@@ -1,4 +1,4 @@
-const { ChatModel } = require('../models/chat.model.js')
+const { ChatModel } = require('./models/chat.model.js')
 
 class ChatManagerMongo{
     constructor(){

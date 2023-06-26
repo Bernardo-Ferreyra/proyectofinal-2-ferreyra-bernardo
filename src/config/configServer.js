@@ -1,4 +1,3 @@
-const { connect } = require('mongoose')
 const { MongoSingleton } = require('../utils/sinlgeton')
 require('dotenv').config()
 

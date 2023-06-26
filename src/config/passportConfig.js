@@ -1,5 +1,5 @@
 const passport = require('passport')
-const { userModel } = require('../DAO/models/user.model')
+const { userModel } = require('../DAO/mongo/models/user.model')
 const GithubStrategy = require('passport-github2')
 require('dotenv').config()
 

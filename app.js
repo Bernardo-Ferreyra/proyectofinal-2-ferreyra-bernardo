@@ -7,15 +7,15 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const routerServer= require('./src/routes/index.js')
-const { connectDb }= require('./src/config/configServer.js')
+/* const { connectDb }= require('./src/config/configServer.js') */
 const { initPassportGithub } = require('./src/config/passportConfig.js');
 const { initPassport } = require('./src/config/passport-jwt-config.js');
 const { productService, chatService } = require('./src/services/Services.js');
 const ObjectId = mongoose.Types.ObjectId
 const PORT = 8080;
 const app = express()
-
-connectDb();
+/* 
+connectDb(); */
 
 const httpServer = app.listen(PORT, () => {
 	console.log(`Escuchando en el puerto ${PORT}`);

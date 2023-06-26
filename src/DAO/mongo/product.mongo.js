@@ -1,32 +1,31 @@
-const { ProductModel } = require('../models/product.model.js')
+const { ProductModel } = require('./models/product.model.js')
 
-
-class ProductManagerMongo{
+class ProductDaoMongo{
     constructor(){
         this.productModel = ProductModel
     }
 
-    async getProducts(){
+/*     async getProducts(){
         try {
             return await this.productModel.find({}).lean()
         } catch (err) {
             return new Error(err)
         }
-    }
+    } */
 
-    async getProductsPaginate(limit ,page ,sortOptions){
+    async getProducts(limit ,page ,sortOptions){
         try{
-            return await this.productModel.paginate({},{limit: limit , page: page, sort: sortOptions, lean:true})
+            return await this.productModel.paginate({},{limit: limit , page: page, sort: sortOptions, leanWithId: false})
         }catch(err){
             return new Error(err)
         }
     }
 
-    async addProduct(newProduct){
+    async createProduct(newProduct){
         try{
             return await this.productModel.create(newProduct)
         }catch(err){
-            throw new Error(err);
+            console.log(err);
         }
     }
 
@@ -34,7 +33,7 @@ class ProductManagerMongo{
         try{
             return await this.productModel.findOne({_id: pid});
         }catch(err){
-            return new Error(err)
+            console.log(err)
         }
     }
 
@@ -42,7 +41,7 @@ class ProductManagerMongo{
         try{
             return await this.productModel.deleteOne({_id: pid});
         }catch(err){
-            return new Error(err)
+            console.log(err)
         }
     }
 
@@ -50,10 +49,10 @@ class ProductManagerMongo{
         try{
             return await this.productModel.updateOne({_id: pid}, obj);
         }catch(err){
-            return new Error(err)
+            console.log(err)
         }
     }
 }
 
 
-module.exports = ProductManagerMongo ;
+module.exports = ProductDaoMongo ;

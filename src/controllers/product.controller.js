@@ -2,7 +2,15 @@ const { productService } = require("../services/Services");
 
 class ProductController{
 
-    getProducts = async(req, res) => {
+        getProducts = async (req, res) =>{
+            try {
+                const products = await productService.getProducts()
+                res.send({status: 'success', payload: products})
+            } catch (err) {
+                console.log(err)
+            }
+        }
+/*     getProducts = async(req, res) => {
         try{
             const {limit= 5}= req.query
             const{page=1} = req.query
@@ -24,7 +32,7 @@ class ProductController{
                 hasNextPage,
                 prevLink,
                 nextLink 
-            } = await productService.getProductsPaginate(limit ,page ,sortOptions)
+            } = await productService.getProducts(limit ,page ,sortOptions)
     
             !hasPrevPage
             ? prevLink = null
@@ -50,13 +58,13 @@ class ProductController{
         } catch(err){
             console.log(err)
         }
-    }
+    } */
 
     getProductById = async(req, res) => {
         try{
             const id = req.params.pid;
             const product = await productService.getProductById(id);
-            Object.keys(product).length === 0// si el obj esta vacio
+            !product
             ?res.status(404).send({ error: 'No existe el producto' })
             :res.send(product); 
         } catch(err){
@@ -64,11 +72,11 @@ class ProductController{
         }
     }
 
-    addProduct = async(req, res)=>{
+    createProduct = async(req, res)=>{
         try{
             const product = req.body
-            const newProduct = await productService.addProduct(product)
-            Object.keys(newProduct).length === 0
+            const newProduct = await productService.createProduct(product)
+            !newProduct
             ? res.status(400).send({ error: "No se pudo agregar el producto" })
             : res.status(201).send({status:'producto agregado', payload: newProduct})
         } catch(err){
@@ -81,7 +89,7 @@ class ProductController{
             const id = req.params.pid;
             const productModify= req.body
             const modifiedProduct= await productService.updateProduct(id, productModify)
-            Object.keys(modifiedProduct).length === 0
+            !modifiedProduct
             ? res.status(400).send({ error: 'No se ha podido modificar!' })
             : res.status(200).send({ status: `el producto con ID ${id} se ha modificado con exito!`, payload: productModify })
         }catch(err){
@@ -93,9 +101,9 @@ class ProductController{
         try{
             const id = req.params.pid;
             const deletedProduct = await productService.deleteProduct(id)
-            Object.keys(deletedProduct).length === 0
+            !deletedProduct
             ? res.status(404).send({error: `El producto con ID ${id} no existe`})
-            : res.status(200).send({ status:`El producto con ID ${id} se ha eliminado`, payload: deletedProduct});
+            : res.status(200).send({ status:`El producto con ID ${id} se ha eliminado`});
         }catch(err){
             console.log(err)
         }
