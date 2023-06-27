@@ -1,15 +1,16 @@
 const { 
-    ProductDao 
+    ProductDao,
+    CartDao
 } = require("../DAO/factory");
 const ProductRepository = require('../repositories/product.repository.js')
+const CartRepository = require("../repositories/cart.repository.js");
 
 
-const CartManagerMongo = require("../DAO/mongo/cart.mongo");
 const ChatManagerMongo = require("../DAO/mongo/chat.mongo");
 const UserManagerMongo = require("../DAO/mongo/user.mongo");
 
 
-const cartService = new CartManagerMongo()
+const cartService = new CartRepository(new CartDao())
 const productService = new ProductRepository(new ProductDao())
 const userService = new UserManagerMongo()
 const chatService = new ChatManagerMongo()

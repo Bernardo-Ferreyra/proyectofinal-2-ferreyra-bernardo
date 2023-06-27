@@ -6,10 +6,6 @@ class ProductRepository{
     getProducts(limit ,page ,sortOptions){
         return this.dao.getProducts(limit ,page ,sortOptions)
     }
-
-/*     getProducts(){
-        return this.dao.getProducts()
-    } */
     getProductById(pid){
         return this.dao.getProductById(pid)
     }

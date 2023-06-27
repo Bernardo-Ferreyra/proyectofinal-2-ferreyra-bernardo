@@ -5,8 +5,8 @@ class CartController{
     createCart = async(req, res)=>{
         try{
             const newCart = {products:[]}
-            await cartService.createCart(newCart)
-            res.status(201).send({ message: 'Carrito creado correctamente'})
+            const result = await cartService.createCart(newCart)
+            res.status(201).send({ status: 'success', payload: result})
         }catch(err){
             console.log(err)
         }
@@ -14,11 +14,8 @@ class CartController{
 
     getCarts = async (req, res) => {
         try{
-            const limit = req.query.limit
-            const carts = await cartService.getCarts();
-            limit 
-            ? res.status(201).send(carts.slice(0, limit)) 
-            : res.status(201).send(carts);  
+            const carts = await cartService.getCarts()
+            res.status(201).send({status:'success', payload: carts});  
         } catch(err){
             console.log(err)
         }
@@ -31,20 +28,20 @@ class CartController{
             if(!cart){
                 res.status(404).send({ message: `El carrito con ID ${cid} no existe` })
             }
-            res.status(201).send(cart)
+            res.status(201).send({status: 'success', payload: cart})
         } catch(err){
             console.log(err)
         }
     }
 
-    deleteCart = async(req, res)=>{
+    emptyCart = async(req, res)=>{
         try{
             const cid = req.params.cid
             let respuesta= await cartService.emptyCart(cid)
             if(!respuesta){
                 return res.status(400).send({message:'no se pudo vaciar el carrito'})
             }
-            res.status(200).send({message: 'Se ha vaciado el carrito'})
+            res.status(200).send({status: 'success', payload: respuesta})
         }catch(err){
             console.log(err)
         }
@@ -58,7 +55,7 @@ class CartController{
             if(!respuesta){
                return res.status(400).send({message:'no se pudo eliminar el producto del carrito'})
             }
-            res.status(200).send({ status:`El producto ID:${pid} se ha eliminado del carrito`});
+            res.status(200).send({ status:`El producto ID:${pid} se ha eliminado del carrito`, payload: respuesta});
         }catch(err){
             console.log(err)
         }
@@ -104,7 +101,7 @@ class CartController{
                 res.status(400).send({message:'no se pudo agregar el producto'})
             }
     
-            res.status(201).send({message:'producto agregado con exito'})
+            res.status(201).send({message:'success', payload: addProduct})
         }catch(err){
             console.log(err)
         }

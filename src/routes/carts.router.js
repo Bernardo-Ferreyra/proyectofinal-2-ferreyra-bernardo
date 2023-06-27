@@ -8,7 +8,7 @@ router.get('/', cartController.getCarts);
 
 router.get('/:cid', cartController.getCartById);
 
-router.delete('/:cid', cartController.deleteCart)
+router.delete('/:cid', cartController.emptyCart)
 
 router.put('/:cid', cartController.modifyCart)
 

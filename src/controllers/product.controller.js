@@ -9,7 +9,7 @@ class ProductController{
             const { sort } = req.query;
             
             const products = await productService.getProducts(limit, page, sort)
-            res.send({status: 'success', payload: products})
+            res.status(201).send({status: 'success', payload: products})
         } catch (err) {
             console.log(err)
         }
