@@ -20,7 +20,7 @@ class ProductDaoFile {
     } 
   };
 
-  getProducts = async () => {
+  async getProducts() {
     try {
       return this.products;
     } catch (err) {
@@ -59,8 +59,7 @@ class ProductDaoFile {
     }
   };
 
-
-   async getProductById(id){
+  async getProductById(id){
     try{
       return await this.products.find((product) => product.id === parseInt(id));
     } catch (err){
@@ -68,7 +67,7 @@ class ProductDaoFile {
     }
   };
 
-  async deleteProduct(id) {
+  async deleteProduct(id){
     try{
       const productIndex = this.products.findIndex((product) => product.id === parseInt(id));
       const productsFilter = this.products.filter((product) => product.id !== parseInt(id));
@@ -82,7 +81,7 @@ class ProductDaoFile {
     }
   };
 
-  updateProduct = async (id, obj ) => {
+  async updateProduct(id, obj){
     try {
       const productIndex = this.products.findIndex((product) => product.id === parseInt(id));
       if (productIndex === -1) {

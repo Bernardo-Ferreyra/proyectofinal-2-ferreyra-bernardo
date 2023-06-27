@@ -2,63 +2,18 @@ const { productService } = require("../services/Services");
 
 class ProductController{
 
-        getProducts = async (req, res) =>{
-            try {
-                const products = await productService.getProducts()
-                res.send({status: 'success', payload: products})
-            } catch (err) {
-                console.log(err)
-            }
-        }
-/*     getProducts = async(req, res) => {
-        try{
+    getProducts = async (req, res) =>{
+        try {
             const {limit= 5}= req.query
             const{page=1} = req.query
             const { sort } = req.query;
-            let sortOptions={}
-    
-            if (sort === 'asc') {
-                sortOptions = { price: 1 };
-            } else if (sort === 'desc') {
-                sortOptions = { price: -1 };
-            }
-    
-            let { 
-                docs, 
-                totalPages,
-                prevPage, 
-                nextPage,
-                hasPrevPage, 
-                hasNextPage,
-                prevLink,
-                nextLink 
-            } = await productService.getProducts(limit ,page ,sortOptions)
-    
-            !hasPrevPage
-            ? prevLink = null
-            : prevLink =`/api/products?page=${prevPage}&limit=${limit}&sort=${sort}`
-    
-            !hasNextPage 
-            ?nextLink = null
-            :nextLink =`/api/products?page=${nextPage}&limit=${limit}&sort=${sort}`
-    
-    
-            res.send({
-                status: 'success',
-                payload: docs,
-                totalPages,
-                prevPage,
-                nextPage,
-                page,
-                hasPrevPage,
-                hasNextPage,
-                prevLink,
-                nextLink
-            })
-        } catch(err){
+            
+            const products = await productService.getProducts(limit, page, sort)
+            res.send({status: 'success', payload: products})
+        } catch (err) {
             console.log(err)
         }
-    } */
+    }
 
     getProductById = async(req, res) => {
         try{

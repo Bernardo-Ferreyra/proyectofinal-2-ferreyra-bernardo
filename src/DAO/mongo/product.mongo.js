@@ -5,17 +5,57 @@ class ProductDaoMongo{
         this.productModel = ProductModel
     }
 
-/*     async getProducts(){
-        try {
-            return await this.productModel.find({}).lean()
-        } catch (err) {
-            return new Error(err)
-        }
-    } */
-
-    async getProducts(limit ,page ,sortOptions){
+    async getProducts(limit ,page ,sort){
         try{
-            return await this.productModel.paginate({},{limit: limit , page: page, sort: sortOptions, leanWithId: false})
+            let sortOptions
+    
+            if (sort === 'asc') {
+                sortOptions = { price: 1 };
+            } else if (sort === 'desc') {
+                sortOptions = { price: -1 };
+            }
+                const options = {
+                  limit: parseInt(limit),
+                  page: parseInt(page),
+                  sort: sortOptions,
+                  leanWithId: false
+                };
+            
+                const result = await this.productModel.paginate({}, options);
+            
+                const {
+                  docs,
+                  totalPages,
+                  prevPage,
+                  nextPage,
+                  hasPrevPage,
+                  hasNextPage
+                } = result;
+            
+                let prevLink, nextLink;
+            
+                if (hasPrevPage) {
+                  prevLink = `/api/products?page=${prevPage}&limit=${limit}&sort=${sort}`;
+                } else {
+                  prevLink = null;
+                }
+            
+                if (hasNextPage) {
+                  nextLink = `/api/products?page=${nextPage}&limit=${limit}&sort=${sort}`;
+                } else {
+                  nextLink = null;
+                }
+            
+                return {
+                  docs,
+                  totalPages,
+                  prevPage,
+                  nextPage,
+                  hasPrevPage,
+                  hasNextPage,
+                  prevLink,
+                  nextLink
+                };
         }catch(err){
             return new Error(err)
         }
