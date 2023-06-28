@@ -25,7 +25,7 @@ class ViewsController{
                 hasNextPage,
                 prevLink,
                 nextLink 
-            } = await productService.getProductsPaginate(limit ,page ,sortOptions)
+            } = await productService.getProducts(limit ,page ,sortOptions)
     
             !hasPrevPage
             ? prevLink = null

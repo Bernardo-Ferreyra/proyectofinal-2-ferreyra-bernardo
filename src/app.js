@@ -23,7 +23,7 @@ const socketServer = new Server(httpServer)
 
 //hbs
 app.engine('handlebars', handlebars.engine())
-app.set('views',__dirname+'/src/views')
+app.set('views',__dirname+'/views')
 app.set('view engine', 'handlebars')
 
 

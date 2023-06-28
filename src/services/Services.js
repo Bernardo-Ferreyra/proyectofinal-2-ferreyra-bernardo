@@ -1,7 +1,4 @@
-const { 
-    ProductDao,
-    CartDao
-} = require("../DAO/factory");
+const { ProductDao, CartDao } = require("../DAO/factory");
 const ProductRepository = require('../repositories/product.repository.js')
 const CartRepository = require("../repositories/cart.repository.js");
 
