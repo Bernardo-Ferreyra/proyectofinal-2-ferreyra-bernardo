@@ -1,12 +1,12 @@
-const { connectDb } = require ('../config/configServer.js') 
+const config = require ('../config/configServer.js') 
 let ProductDao
 let CartDao
 
 
-switch ('FILE') {
+switch (config.persistence) {
     case 'MONGO':
         //coneccion
-        connectDb()
+        config.connectDb()
         const ProductDaoMongo = require ('./mongo/product.mongo.js')
         const CartDaoMongo = require('./mongo/cart.mongo.js')
         ProductDao = ProductDaoMongo

@@ -6,16 +6,14 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
-const routerServer= require('./src/routes/index.js')
-/* const { connectDb }= require('./src/config/configServer.js') */
-const { initPassportGithub } = require('./src/config/passportConfig.js');
-const { initPassport } = require('./src/config/passport-jwt-config.js');
-const { productService, chatService } = require('./src/services/Services.js');
+const routerServer= require('./routes/index.js')
+const { initPassportGithub } = require('./config/passportConfig.js');
+const { initPassport } = require('./config/passport-jwt-config.js');
+const { productService, chatService } = require('./services/Services.js');
 const ObjectId = mongoose.Types.ObjectId
-const PORT = 8080;
+const PORT = process.env.PORT;
 const app = express()
-/* 
-connectDb(); */
+
 
 const httpServer = app.listen(PORT, () => {
 	console.log(`Escuchando en el puerto ${PORT}`);
