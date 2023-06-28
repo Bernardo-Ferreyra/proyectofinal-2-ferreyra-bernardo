@@ -50,7 +50,6 @@ class CartDaoMongo{
         }
     }
 
-
     async deleteProductFromCart(cid, pid){
         try{
             return await this.cartModel.findOneAndUpdate(
@@ -86,7 +85,6 @@ class CartDaoMongo{
             console.log(err)
         }
     }
-
 
     async modifyCart(cid, newCart){
         try{

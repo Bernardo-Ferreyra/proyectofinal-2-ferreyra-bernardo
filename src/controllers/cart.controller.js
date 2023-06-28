@@ -69,7 +69,7 @@ class CartController{
             if(!respuesta){
                 return res.status(400).send({message:'No se pudo modificar el carrito'})
             }
-            res.status(200).send({message: 'Se ha modificado el carrito'})
+            res.status(200).send({message: 'Se ha modificado el carrito', payload: respuesta})
         }catch(err){
             console.log(err)
         }
@@ -84,7 +84,7 @@ class CartController{
             if(!respuesta){
                return res.status(400).send({message:'no se pudo modificar el producto del carrito'})
             }
-            res.status(200).send({status:`El producto ID:${pid} se ha modificado`});
+            res.status(200).send({status:`El producto ID:${pid} se ha modificado`, payload: respuesta});
         }catch(err){
             console.log(err)
         }

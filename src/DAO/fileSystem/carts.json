@@ -33,8 +33,12 @@
 		"id": 3,
 		"products": [
 			{
-				"idProduct": 1,
-				"cantidad": 6
+				"product": 2,
+				"cantidad": 5
+			},
+			{
+				"product": 7,
+				"cantidad": 1
 			}
 		]
 	}

@@ -21,8 +21,11 @@ class CartRepository{
     deleteProductFromCart(cid, pid){
         return this.dao.deleteProductFromCart(cid, pid)
     }
-    updateProduct(pid, obj){
-        return this.dao.updateProduct(pid, obj)
+    modifyProductFromCart(cid ,pid , cantidad){
+        return this.dao.modifyProductFromCart(cid ,pid , cantidad)
+    }
+    modifyCart(cid, newCart){
+        return this.dao.modifyCart(cid, newCart)
     }
 }
 

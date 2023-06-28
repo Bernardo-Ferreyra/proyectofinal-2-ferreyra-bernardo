@@ -95,6 +95,39 @@ class CartDaoFile {
       console.log(err)
     }
   }
+
+  async modifyProductFromCart(cid ,pid , cantidad){
+    try {
+      const carts = await this.getCarts()
+      const cart = carts.find(element => element.id === parseInt(cid))
+      const product = cart.products.find(element => element.idProduct === parseInt(pid))
+      if(!product){
+        return
+      }else{
+        product.cantidad = cantidad
+        await fs.promises.writeFile(this.path, JSON.stringify(carts, "utf-8", "\t"));
+        return cart
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async modifyCart(cid, newCart){
+    try {
+      const carts = await this.getCarts()
+      const cart = carts.find(element => element.id === parseInt(cid))
+      if(!cart){
+        return
+      }else{
+        cart.products = newCart
+        await fs.promises.writeFile(this.path, JSON.stringify(carts, "utf-8", "\t"));
+        return cart
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 
