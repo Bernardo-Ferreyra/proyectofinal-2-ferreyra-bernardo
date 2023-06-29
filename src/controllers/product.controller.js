@@ -1,3 +1,4 @@
+const { ProductDto } = require("../dto/product.dto");
 const { productService } = require("../services/Services");
 
 class ProductController{
@@ -29,16 +30,18 @@ class ProductController{
 
     createProduct = async(req, res)=>{
         try{
-            const product = req.body
-            const newProduct = await productService.createProduct(product)
-            !newProduct
-            ? res.status(400).send({ error: "No se pudo agregar el producto" })
-            : res.status(201).send({status:'producto agregado', payload: newProduct})
+            const {title, description, price, code, stock, category, thumbnail} = req.body
+            let newProduct = new ProductDto({title, description, price, code, stock, category, thumbnail}) 
+            let product = await productService.createProduct(newProduct)
+            !product
+            ? res.status(400).send({ error: "No se pudo crear el producto" })
+            : res.status(201).send({status:'producto creado', payload: product})
         } catch(err){
             console.log(err)
         }
     }
 
+    //dto?
     updateProduct = async(req, res)=>{
         try{
             const id = req.params.pid;

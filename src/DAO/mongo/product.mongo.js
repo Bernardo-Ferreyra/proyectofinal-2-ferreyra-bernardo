@@ -18,7 +18,8 @@ class ProductDaoMongo{
                   limit: parseInt(limit),
                   page: parseInt(page),
                   sort: sortOptions,
-                  leanWithId: false
+                  leanWithId: false,
+                  lean: true
                 };
             
                 const result = await this.productModel.paginate({}, options);

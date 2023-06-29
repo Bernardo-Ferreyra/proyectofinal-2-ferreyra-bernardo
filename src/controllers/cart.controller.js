@@ -107,6 +107,26 @@ class CartController{
         }
     }
 
+    generateTicket = async (req, res)=>{
+        try {
+            const cid = req.params.cid
+            const cart = await cartService.getCartById(cid)
+            const productsWithoutStock = [];
+
+            cart.products.forEach((item) => {
+                let stock = item.product.stock;
+                if (stock >= item.cantidad ){
+                    item.product.stock -= item.cantidad
+                }else{
+                    productsWithoutStock.push(item)
+                }
+                console.log(stock);
+              });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 }
 
 
