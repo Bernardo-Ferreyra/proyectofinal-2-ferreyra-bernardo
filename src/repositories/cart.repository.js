@@ -27,6 +27,10 @@ class CartRepository{
     modifyCart(cid, newCart){
         return this.dao.modifyCart(cid, newCart)
     }
+
+    generateTicket(ticketData){
+        return this.dao.generateTicket(ticketData)
+    }
 }
 
 module.exports = CartRepository

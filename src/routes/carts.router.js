@@ -18,7 +18,7 @@ router.put('/:cid/products/:pid', cartController.modifyProductFromCart)
 
 router.post('/:cid/products/:pid', cartController.addToCart);
 
-router.get('/:cid/purchase', cartController.generateTicket );
+router.post('/:cid/purchase', cartController.generateTicket );
 
 
 

@@ -1,4 +1,5 @@
 const { CartModel } = require('./models/cart.model.js')
+const { TicketModel } = require('./models/ticket.model.js')
 
 class CartDaoMongo{
     constructor(){
@@ -95,6 +96,14 @@ class CartDaoMongo{
             )
         }catch(err){
             console.log(err)
+        }
+    }
+
+    async generateTicket(ticketData){
+        try {
+            return await TicketModel.create(ticketData);
+        } catch (error) {
+            console.log(error)
         }
     }
 }
