@@ -1,16 +1,17 @@
 const {Router} = require('express')
 const viewsController = require('../controllers/views.controller.js');
+const { authorization } = require('../config/authorizationjwtRole.js');
+const { passportCall } = require('../config/passportCall.js');
 const router = Router()
-
+    passportCall
 
 router.get('/', viewsController.getProducts)
 
-router.get('/realTimeProducts', viewsController.getRealTimeProducts)
+router.get('/realTimeProducts',passportCall('current', {session: false}),authorization('admin'), viewsController.getRealTimeProducts)
 
 router.get('/carts/:cid', viewsController.getCartById)
 
-
-router.get('/chat', (req, res)=>{
+router.get('/chat', passportCall('current', {session: false}), authorization('user') , (req, res)=>{
     res.render('chat', {})
 })
 

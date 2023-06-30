@@ -1,3 +1,24 @@
+<nav class="navbar navbar-light bg-dark px-3">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <div class="d-flex">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-person-fill my-auto" viewBox="0 0 16 16">
+      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+      {{#if user}}
+      <div class="d-flex flex-column mx-2">
+        <p class="m-0 text-white" style="font-size: 15px">{{user.username}}</p>
+        <p class="m-0 text-white" style="font-size: 12px">{{user.email}} </p>
+        <p class="m-0 text-white" style="font-size: 12px">role:{{user.role}} </p>
+      </div>
+      <button class="btn btn-warning h-50 my-auto"><a href="/api/session/logout" class="text-decoration-none text-dark">Log out</a></button>
+      {{else}}
+      <div>
+      <button class="btn btn-warning mx-2"><a href="/api/session/login" class="text-decoration-none text-dark">Log In</a></button>
+      </div>
+      {{/if}}
+
+  </div>
+
+</nav>
 <div class="d-flex justify-content-center align-items-center flex-column">
 
   <h1 class="mb-5">{{title}}</h1>
@@ -34,6 +55,15 @@
       </tbody>
 
     </table>
+    <div class="d-flex align-items-center justify-content-center mb-5">
+          {{#if hasPrevPage}}
+          <a href="{{prevLink}}"><button class="btn btn-warning rounded-0">anterior</button></a>
+          {{/if}}
+
+          {{#if hasNextPage}}
+          <a href="{{nextLink}}"><button class="btn btn-warning rounded-0">siguiente</button></a>
+          {{/if}}
+    </div>
     {{else}}
     <h3>No hayproductos para mostrar!</h3>
     {{/if}}

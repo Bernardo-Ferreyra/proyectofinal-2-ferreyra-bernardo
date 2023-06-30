@@ -140,8 +140,13 @@ class CartController{
         
                 cart.products = productsWithoutStock;
                 await cartService.modifyCart(cid, productsWithoutStock );
+
+                if(productsWithoutStock.leng > 0){
+                    res.status(201).send({ message: 'Compra realizada parcialmente,existen productos sin stock suficiente', ticket: createdTicket });
+                }else{
+                    res.status(201).send({ message: 'Compra realizada exitosamente', ticket: createdTicket });
+                }
         
-                res.status(201).send({ message: 'Compra realizada exitosamente', ticket: createdTicket });
             } else {
                 const productsWithoutStockIds = productsWithoutStock.map(item => item.product._id);
                 res.status(200).send({message: 'La compra no se pudo completar', payload: productsWithoutStockIds});
