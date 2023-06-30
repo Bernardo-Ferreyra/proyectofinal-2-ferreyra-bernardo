@@ -1,5 +1,5 @@
 const { cartService, productService } = require("../services/Services")
-
+const { v4: uuidv4 } = require('uuid');
 class CartController{
 
     createCart = async(req, res)=>{
@@ -117,36 +117,34 @@ class CartController{
                 let stock = item.product.stock;
                 let pid = item.product._id
                 if (stock >= item.cantidad) {
-                  item.product.stock -= item.cantidad;
-                  await productService.updateProduct(pid, item.product)
+                    item.product.stock -= item.cantidad;
+                    await productService.updateProduct(pid, item.product)
                 } else {
-                  productsWithoutStock.push(item);
+                    productsWithoutStock.push(item);
                 }
                 
             }
 
-            const purchasedProducts = cart.products.filter(item => !productsWithoutStock.includes(item.product));
+            const purchasedProducts = cart.products.filter(item =>
+                !productsWithoutStock.some(p => p.product._id === item.product._id));
 
             if (purchasedProducts.length > 0) {
-              const ticket = {
-                code: 'GENERATED_TICKET_CODE2', // Genera un código único para el ticket
-                purchase_datetime: new Date(),
-                amount: purchasedProducts.reduce((total, item) => total + (item.cantidad * item.product.price), 0),
-                purchaser: 'usuario'
-              };
+                const ticket = {
+                    code: uuidv4(),
+                    purchase_datetime: new Date(),
+                    amount: purchasedProducts.reduce((total, item) => total + (item.cantidad * item.product.price), 0),
+                    purchaser: 'usuarioasddsd'
+                };
         
-              await cartService.generateTicket(ticket);
+                const createdTicket = await cartService.generateTicket(ticket);
         
-              cart.products = productsWithoutStock;
-              await cartService.modifyCart(cid, productsWithoutStock );
+                cart.products = productsWithoutStock;
+                await cartService.modifyCart(cid, productsWithoutStock );
         
-              res.status(201).send({ message: 'Compra realizada exitosamente', ticket });
+                res.status(201).send({ message: 'Compra realizada exitosamente', ticket: createdTicket });
             } else {
-              const productsWithoutStockIds = productsWithoutStock.map(item => item._id);
-              res.status(200).send({
-                message: 'La compra no se pudo completar',
-                productsWithoutStockIds: productsWithoutStockIds,
-              });
+                const productsWithoutStockIds = productsWithoutStock.map(item => item.product._id);
+                res.status(200).send({message: 'La compra no se pudo completar', payload: productsWithoutStockIds});
             }
         } catch (error) {
             console.log(error)

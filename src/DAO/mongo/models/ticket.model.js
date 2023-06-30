@@ -21,7 +21,7 @@ const ticketSchema = new Schema({
         required: true
     }
 })
-
+ticketSchema.index({ code: 1 }, { unique: true });
 
 const TicketModel= model(collection, ticketSchema)
 
