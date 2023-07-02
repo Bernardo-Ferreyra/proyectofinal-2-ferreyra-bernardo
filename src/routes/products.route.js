@@ -1,16 +1,19 @@
 const {Router} = require('express')
-const productController = require('../controllers/product.controller.js')
+const productController = require('../controllers/product.controller.js');
+const { passportCall } = require('../config/passportCall.js');
+const { authorization } = require('../config/authorizationjwtRole.js');
 const router = Router()
+
 
 router.get('/', productController.getProducts);
 
-router.post('/' , productController.createProduct);
+router.post('/' ,passportCall('current', {session: false}), authorization('admin'), productController.createProduct);
 
 router.get('/:pid', productController.getProductById);
 
-router.put('/:pid', productController.updateProduct);
+router.put('/:pid',passportCall('current', {session: false}), authorization('admin'), productController.updateProduct);
 
-router.delete('/:pid', productController.deleteProduct);
+router.delete('/:pid',passportCall('current', {session: false}), authorization('admin'), productController.deleteProduct);
 
 
 

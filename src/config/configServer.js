@@ -12,5 +12,7 @@ module.exports={
     persistence: process.env.PERSISTENCE,
     port: process.env.PORT,
     jwt_secret_key: process.env.JWT_SECRET_KEY,
+    gmail_user_app: process.env.GMAIL_USER,
+    gmail_pass_app: process.env.GMAIL_PASS,
     connectDb: async()=> await MongoSingleton.getInstance()
 }

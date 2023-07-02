@@ -39,7 +39,7 @@ class UserController {
             })
         
             res.cookie('coderCookieToken', accessToken, {
-                maxAge: 60*60*100,
+                maxAge: 60*60*10000,
                 httpOnly: true
             }).redirect('/')
         

@@ -10,6 +10,7 @@ const routerServer= require('./routes/index.js')
 const { initPassportGithub } = require('./config/passportConfig.js');
 const { initPassport } = require('./config/passport-jwt-config.js');
 const { productService, chatService } = require('./services/Services.js');
+const configServer = require('./config/configServer.js');
 const ObjectId = mongoose.Types.ObjectId
 const PORT = process.env.PORT;
 const app = express()
@@ -29,21 +30,21 @@ app.set('view engine', 'handlebars')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use('/static', express.static(__dirname+'/src/public'))
+app.use('/static', express.static(__dirname+'/public'))
 
-app.use(cookieParser('palabrasecreta'))
+app.use(cookieParser(configServer.jwt_secret_key))
 
 app.use(session({
 	store: MongoStore.create({
 		ttl: 100000*60,
-		mongoUrl: 'mongodb+srv://berniiferreyra:Felipeyara338@cluster0.d9ot40r.mongodb.net/?retryWrites=true&w=majority',
+		mongoUrl: process.env.MONGO_URL,
 		mongoOptions: {
 			useNewUrlParser: true,
 			useUnifiedTopology: true
 		}
 
 	}),
-	secret: 'palabrasecreta',
+	secret: configServer.jwt_secret_key,
 	resave: false,
 	saveUninitialized: false
 }))
@@ -71,7 +72,7 @@ socketServer.on('connection', socket=>{
 			const product = await productService.getProductById(pid.id)
 			if(product) {
 			  await productService.deleteProduct(pid.id)
-			  const data = await productService.getProducts()
+			  const data = await productService.getRealTimeProducts()
 			  return socket.emit('newList', data)
 			}
 			return socket.emit('newList', {status: "error", message: `El producto con ID ${pid.id} no existe`})
@@ -82,9 +83,13 @@ socketServer.on('connection', socket=>{
 
 	socket.on('addProduct', async (data) => {
 		try {
-			await productService.addProduct(data);
-			const newData = await productService.getProducts()
-			return socket.emit('productAdded', newData)
+			const newProduct = await productService.createProduct(data);
+			if(!newProduct){
+				return new Error(err)
+			}else{
+				const newData = await productService.getRealTimeProducts()
+				return socket.emit('productAdded', newData)
+			}
 		} catch (error) {
 			return socket.emit('productAdded', { status: 'error', message: `El code: ${data.code} ya existe!`})
 		}

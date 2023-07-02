@@ -1,5 +1,8 @@
 const { cartService, productService } = require("../services/Services")
 const { v4: uuidv4 } = require('uuid');
+const { sendMail } = require("../utils/nodemailer");
+
+
 class CartController{
 
     createCart = async(req, res)=>{
@@ -112,7 +115,8 @@ class CartController{
             const cid = req.params.cid
             const cart = await cartService.getCartById(cid)
             const productsWithoutStock = [];
-
+            
+            //itero por el carrito y voy validando el stock contra la cantidad
             for (const item of cart.products) {
                 let stock = item.product.stock;
                 let pid = item.product._id
@@ -122,9 +126,10 @@ class CartController{
                 } else {
                     productsWithoutStock.push(item);
                 }
-                
             }
 
+            //accedo al carrito y filtro basado en la negacion de productsWithoutStock
+            //es decir si no esta en productsWithoutStock lo guardo en un array(purchasedProducts)
             const purchasedProducts = cart.products.filter(item =>
                 !productsWithoutStock.some(p => p.product._id === item.product._id));
 
@@ -133,7 +138,7 @@ class CartController{
                     code: uuidv4(),
                     purchase_datetime: new Date(),
                     amount: purchasedProducts.reduce((total, item) => total + (item.cantidad * item.product.price), 0),
-                    purchaser: 'usuarioasddsd'
+                    purchaser: req.user.email
                 };
         
                 const createdTicket = await cartService.generateTicket(ticket);
@@ -141,9 +146,11 @@ class CartController{
                 cart.products = productsWithoutStock;
                 await cartService.modifyCart(cid, productsWithoutStock );
 
-                if(productsWithoutStock.leng > 0){
+                if(productsWithoutStock.length > 0){
+                    await sendMail(ticket)
                     res.status(201).send({ message: 'Compra realizada parcialmente,existen productos sin stock suficiente', ticket: createdTicket });
                 }else{
+                    await sendMail(ticket)
                     res.status(201).send({ message: 'Compra realizada exitosamente', ticket: createdTicket });
                 }
         

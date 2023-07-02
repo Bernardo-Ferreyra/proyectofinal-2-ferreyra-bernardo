@@ -1,6 +1,7 @@
 const passport = require('passport')
-const { userModel } = require('../DAO/mongo/models/user.model')
+/* const { userModel } = require('../DAO/mongo/models/user.model') */
 const GithubStrategy = require('passport-github2')
+const { userService } = require('../services/Services')
 require('dotenv').config()
 
 
@@ -12,7 +13,7 @@ const initPassportGithub = ()=>{
         callbackURL: process.env.GITHUB_CALLBACK_URL
     }, async(accessToken, refreshToken, profile, done)=>{
         try {
-           let user= await userModel.findOne({email: profile._json.email})
+           let user= await userService.getUser({email: profile._json.email})
            if(!user){
             
             let newUser= {

@@ -4,7 +4,15 @@ class ProductDaoMongo{
     constructor(){
         this.productModel = ProductModel
     }
-
+    
+    async getRealTimeProducts(){
+        try{
+            return await this.productModel.find({}).lean()
+        }catch(err){
+            return new Error(err)
+        }
+    }
+    
     async getProducts(limit ,page ,sort){
         try{
             let sortOptions

@@ -90,7 +90,7 @@ addForm.addEventListener('submit', evt => {
         title: title.value,
         description: description.value,
         price: parseInt(price.value),
-        code:  parseInt(code.value),
+        code: parseInt(code.value),
         stock: parseInt(stock.value),
         category: category.value,
         thumbnail: [thumbnail.value]
@@ -132,6 +132,7 @@ socket.on('productAdded', (newData) => {
         <th scope="col">stock</th>
         <th scope="col">imagenes</th>
         </tr>` + list
+
     document.getElementById('tableProduct').innerHTML = listAct
     Swal.fire({
         title: 'Producto Agregado Correctamente',

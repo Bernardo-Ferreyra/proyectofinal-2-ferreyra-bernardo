@@ -41,7 +41,6 @@ class ProductController{
         }
     }
 
-    //dto?
     updateProduct = async(req, res)=>{
         try{
             const id = req.params.pid;

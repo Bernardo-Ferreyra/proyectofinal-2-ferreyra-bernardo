@@ -1,9 +1,8 @@
 const {Router} = require('express')
-const viewsController = require('../controllers/views.controller.js');
 const { authorization } = require('../config/authorizationjwtRole.js');
 const { passportCall } = require('../config/passportCall.js');
+const viewsController = require('../controllers/views.controller.js');
 const router = Router()
-    passportCall
 
 router.get('/', viewsController.getProducts)
 

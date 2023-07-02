@@ -2,7 +2,9 @@ class ProductRepository{
     constructor(dao){
         this.dao = dao
     }
-
+    getRealTimeProducts(){
+        return this.dao.getRealTimeProducts()
+    }
     getProducts(limit ,page ,sortOptions){
         return this.dao.getProducts(limit ,page ,sortOptions)
     }
