@@ -1,6 +1,12 @@
 const { ProductDto } = require("../dto/product.dto");
 const { productService } = require("../services/Services");
+
+const { Error } = require("../utils/customError/Errors");
+const { CustomError } = require("../utils/customError/customError");
+const { createProductErrorInfo } = require("../utils/customError/info");
 const { generateProducts } = require("../utils/generateProductsFaker");
+
+
 
 class ProductController{
 
@@ -29,16 +35,31 @@ class ProductController{
         }
     }
 
-    createProduct = async(req, res)=>{
+    createProduct = async(req, res, next)=>{
         try{
             const {title, description, price, code, stock, category, thumbnail} = req.body
+            if(!title || !description || !price || !code || !stock || !category){
+                CustomError.createError({
+                    name: 'Product creation error',
+                    cause: createProductErrorInfo({
+                        title, 
+                        description, 
+                        price, 
+                        code, 
+                        stock, 
+                        category
+                    }),
+                    message: 'Error trying to create product',
+                    code: Error.INVALID_TYPE_ERROR
+                })
+            }
             let newProduct = new ProductDto({title, description, price, code, stock, category, thumbnail}) 
             let product = await productService.createProduct(newProduct)
             !product
             ? res.status(400).send({ error: "No se pudo crear el producto" })
             : res.status(201).send({status:'producto creado', payload: product})
-        } catch(err){
-            console.log(err)
+        } catch(error){
+            next(error)
         }
     }
 

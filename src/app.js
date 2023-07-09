@@ -11,6 +11,7 @@ const { initPassportGithub } = require('./config/passportConfig.js');
 const { initPassport } = require('./config/passport-jwt-config.js');
 const { productService, chatService } = require('./services/Services.js');
 const configServer = require('./config/configServer.js');
+const { errorHandler } = require('./middlewares/error.middleware.js');
 const ObjectId = mongoose.Types.ObjectId
 const PORT = process.env.PORT;
 const app = express()
@@ -57,6 +58,8 @@ passport.use(passport.session())
 
 
 app.use(routerServer)
+
+app.use(errorHandler)
 
 //realtimeproducts
 socketServer.on('connection', socket=>{
