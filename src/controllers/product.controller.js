@@ -1,5 +1,6 @@
 const { ProductDto } = require("../dto/product.dto");
 const { productService } = require("../services/Services");
+const { generateProducts } = require("../utils/generateProductsFaker");
 
 class ProductController{
 
@@ -64,6 +65,19 @@ class ProductController{
         }catch(err){
             console.log(err)
         }
+    }
+
+    generateProductsMock = async(req,res)=>{
+        try {
+            let products = []
+            for (let i = 0; i < 50 ; i++) {
+                products.push(generateProducts())  
+            }
+            res.send({status: 'success', payload: products})
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 }
 

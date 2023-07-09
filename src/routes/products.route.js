@@ -4,6 +4,7 @@ const { passportCall } = require('../config/passportCall.js');
 const { authorization } = require('../config/authorizationjwtRole.js');
 const router = Router()
 
+router.get('/mockingproducts', productController.generateProductsMock)
 
 router.get('/', productController.getProducts);
 
@@ -14,7 +15,6 @@ router.get('/:pid', productController.getProductById);
 router.put('/:pid',passportCall('current', {session: false}), authorization('admin'), productController.updateProduct);
 
 router.delete('/:pid',passportCall('current', {session: false}), authorization('admin'), productController.deleteProduct);
-
 
 
 module.exports= router;
