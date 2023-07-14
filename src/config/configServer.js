@@ -9,6 +9,7 @@ dotenv.config({
 
 
 module.exports={
+    mode,
     persistence: process.env.PERSISTENCE,
     port: process.env.PORT,
     jwt_secret_key: process.env.JWT_SECRET_KEY,
