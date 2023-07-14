@@ -1,3 +1,4 @@
+
 class ProductRepository{
     constructor(dao){
         this.dao = dao
@@ -9,7 +10,7 @@ class ProductRepository{
         return this.dao.getProducts(limit ,page ,sortOptions)
     }
     getProductById(pid){
-        return this.dao.getProductById(pid)
+        return this.dao.getProductById(pid)      
     }
     createProduct(newProduct){
         return this.dao.createProduct(newProduct)

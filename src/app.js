@@ -12,14 +12,14 @@ const { initPassport } = require('./config/passport-jwt-config.js');
 const { productService, chatService } = require('./services/Services.js');
 const configServer = require('./config/configServer.js');
 const { errorHandler } = require('./middlewares/error.middleware.js');
-const { addLogger } = require('./utils/logger.js');
+const { addLogger, logger } = require('./utils/logger.js');
 const ObjectId = mongoose.Types.ObjectId
 const PORT = process.env.PORT;
 const app = express()
 
 
 const httpServer = app.listen(PORT, () => {
-	console.log(`Escuchando en el puerto ${PORT}`);
+	logger.info(`Escuchando en el puerto ${PORT}`);
 });
 
 const socketServer = new Server(httpServer)

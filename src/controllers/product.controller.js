@@ -5,6 +5,7 @@ const { Error } = require("../utils/customError/Errors");
 const { CustomError } = require("../utils/customError/customError");
 const { createProductErrorInfo } = require("../utils/customError/info");
 const { generateProducts } = require("../utils/generateProductsFaker");
+const { logger } = require("../utils/logger");
 
 
 
@@ -18,8 +19,8 @@ class ProductController{
             
             const products = await productService.getProducts(limit, page, sort)
             res.status(201).send({status: 'success', payload: products})
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            logger.error(error)
         }
     }
 
@@ -30,8 +31,8 @@ class ProductController{
             !product
             ?res.status(404).send({ error: 'No existe el producto' })
             :res.send(product); 
-        } catch(err){
-            console.log(err)
+        } catch(error){
+            logger.error(error)
         }
     }
 
@@ -72,7 +73,7 @@ class ProductController{
             ? res.status(400).send({ error: 'No se ha podido modificar!' })
             : res.status(200).send({ status: `el producto con ID ${id} se ha modificado con exito!`, payload: productModify })
         }catch(err){
-            console.log(err)
+            logger.error(error)
         }
     }
 
@@ -83,8 +84,8 @@ class ProductController{
             !deletedProduct
             ? res.status(404).send({error: `El producto con ID ${id} no existe`})
             : res.status(200).send({ status:`El producto con ID ${id} se ha eliminado`});
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 

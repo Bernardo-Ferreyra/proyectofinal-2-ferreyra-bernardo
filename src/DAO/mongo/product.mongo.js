@@ -1,3 +1,4 @@
+const { logger } = require('../../utils/logger.js')
 const { ProductModel } = require('./models/product.model.js')
 
 class ProductDaoMongo{
@@ -81,16 +82,16 @@ class ProductDaoMongo{
     async getProductById(pid){
         try{
             return await this.productModel.findOne({_id: pid});
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
     async deleteProduct(pid){
         try{
             return await this.productModel.deleteOne({_id: pid});
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
@@ -98,7 +99,7 @@ class ProductDaoMongo{
         try{
             return await this.productModel.updateOne({_id: pid}, obj);
         }catch(err){
-            console.log(err)
+            logger.error(error)
         }
     }
 }

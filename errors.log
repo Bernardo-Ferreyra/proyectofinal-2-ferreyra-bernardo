@@ -1,4 +1,15 @@
-fatal: alerta fatal
-error: alerta error
-fatal: errorfatal
-error: alerta error
+
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined
+error: undefined
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
