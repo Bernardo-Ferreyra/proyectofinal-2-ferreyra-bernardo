@@ -17,11 +17,13 @@ router.use('/api/session', usersRouter)
 router.get('/loggerTest', async(req, res) =>{
     // req.logger.fatal('alerta fatal')
     // req.logger.error('alerta error')
-     //req.logger.warning('alerta warning')
+    //req.logger.warning('alerta warning')
     // req.logger.info('alerta info')
     // req.logger.http('alerta http')
-    //logger.debug('alerta debug')
-    // req.logger.fatal('fatal error')
+    //req.logger.debug('alerta debug')
+    
+    //logger.error('fatal error')
+    //logger.debug('fatal error')
     
     res.send({message: 'Prueba de logger'})
 

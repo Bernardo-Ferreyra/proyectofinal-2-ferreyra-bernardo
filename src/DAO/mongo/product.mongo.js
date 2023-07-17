@@ -66,16 +66,16 @@ class ProductDaoMongo{
                   prevLink,
                   nextLink
                 };
-        }catch(err){
-            return new Error(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
     async createProduct(newProduct){
         try{
             return await this.productModel.create(newProduct)
-        }catch(err){
-            console.log(err);
+        }catch(error){
+            logger.error(error);
         }
     }
 
@@ -98,7 +98,7 @@ class ProductDaoMongo{
     async updateProduct(pid, obj){
         try{
             return await this.productModel.updateOne({_id: pid}, obj);
-        }catch(err){
+        }catch(error){
             logger.error(error)
         }
     }

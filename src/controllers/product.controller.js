@@ -18,8 +18,10 @@ class ProductController{
             const { sort } = req.query;
             
             const products = await productService.getProducts(limit, page, sort)
-            res.status(201).send({status: 'success', payload: products})
-        } catch (error) {
+            !products
+            ?res.status(404).send({error:'no hay productos'})
+            :res.status(201).send({status: 'success', payload: products})
+        }catch(error){
             logger.error(error)
         }
     }
@@ -31,7 +33,7 @@ class ProductController{
             !product
             ?res.status(404).send({ error: 'No existe el producto' })
             :res.send(product); 
-        } catch(error){
+        }catch(error){
             logger.error(error)
         }
     }
@@ -58,8 +60,8 @@ class ProductController{
             let product = await productService.createProduct(newProduct)
             !product
             ? res.status(400).send({ error: "No se pudo crear el producto" })
-            : res.status(201).send({status:'producto creado', payload: product})
-        } catch(error){
+            : res.status(201).send({status:'success', payload: product})
+        }catch(error){
             next(error)
         }
     }
@@ -72,7 +74,7 @@ class ProductController{
             !modifiedProduct
             ? res.status(400).send({ error: 'No se ha podido modificar!' })
             : res.status(200).send({ status: `el producto con ID ${id} se ha modificado con exito!`, payload: productModify })
-        }catch(err){
+        }catch(error){
             logger.error(error)
         }
     }
@@ -96,8 +98,8 @@ class ProductController{
                 products.push(generateProducts())  
             }
             res.send({status: 'success', payload: products})
-        } catch (error) {
-            console.log(error)
+        }catch(error){
+            logger.error(error)
         }
 
     }

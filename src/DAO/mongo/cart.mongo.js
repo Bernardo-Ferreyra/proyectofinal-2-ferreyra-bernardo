@@ -1,3 +1,4 @@
+const { logger } = require('../../utils/logger.js')
 const { CartModel } = require('./models/cart.model.js')
 const { TicketModel } = require('./models/ticket.model.js')
 
@@ -9,24 +10,24 @@ class CartDaoMongo{
     async getCarts(){
         try{
             return await this.cartModel.find({})
-        }catch(err){
-            return new Error(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
     async createCart(newCart){
         try{
             return await this.cartModel.create(newCart)
-        }catch(err){
-            return new Error(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
     async getCartById(cid){
         try{
             return await this.cartModel.findOne({_id: cid}).lean();
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
@@ -46,20 +47,20 @@ class CartDaoMongo{
                 { $push: { products: { product: pid, cantidad} } },
                 {new:true, upsert:true}
             )
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
     async deleteProductFromCart(cid, pid){
         try{
             return await this.cartModel.findOneAndUpdate(
-                {_id:cid},
+                {_id:cid,"products.product": pid},
                 {$pull: {products:{product:pid}}},
                 {new:true}
             )
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
@@ -70,8 +71,8 @@ class CartDaoMongo{
                 {$set: {products:[]}},
                 {new:true}
             )
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
@@ -82,8 +83,8 @@ class CartDaoMongo{
                 { $set: { "products.$.cantidad": cantidad } },
                 {new:true}
             )
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
@@ -94,8 +95,8 @@ class CartDaoMongo{
                 {$set: {products: newCart}},
                 {new:true}
             )
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
 
@@ -103,7 +104,7 @@ class CartDaoMongo{
         try {
             return await TicketModel.create(ticketData);
         } catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 }

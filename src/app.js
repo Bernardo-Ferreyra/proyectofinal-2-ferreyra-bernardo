@@ -57,14 +57,17 @@ initPassportGithub()
 passport.use(passport.initialize())
 passport.use(passport.session())
 
+
 app.use(addLogger)
+
 app.use(routerServer)
 
 app.use(errorHandler)
 
+
 //realtimeproducts
 socketServer.on('connection', socket=>{
-	console.log("cliente conectado")
+	logger.info("cliente conectado")
 	
 	socket.on('deleteProduct', async (pid)=>{
 		try{
@@ -80,8 +83,8 @@ socketServer.on('connection', socket=>{
 			  return socket.emit('newList', data)
 			}
 			return socket.emit('newList', {status: "error", message: `El producto con ID ${pid.id} no existe`})
-		}catch(err){
-			console.log(err)
+		}catch(error){
+			logger.error(error)
 		}
 	})
 
@@ -111,7 +114,7 @@ socketServer.on('connection', socket => {
 			const messages = await chatService.getMessages()
 			socketServer.emit('messageLogs', messages)
 		}catch(error){
-			console.log(error)
+			logger.error(error)
 		}
     })
 

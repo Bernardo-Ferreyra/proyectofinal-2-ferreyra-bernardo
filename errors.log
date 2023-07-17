@@ -13,3 +13,25 @@ error: undefined
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"2\"","value":"2","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64\"","value":"64","valueType":"string"}
+error: undefined
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64\"","value":"64","valueType":"string"}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"102"}}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64\"","value":"64","valueType":"string"}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"113"}}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64\"","value":"64","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"9\"","value":"9","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"9\"","value":"9","valueType":"string"}
+error: undefined {"kind":"number","path":"cantidad","stringValue":"\"undefined\"","valueType":"undefined"}
+error: undefined {"kind":"number","path":"cantidad","stringValue":"\"undefined\"","valueType":"undefined"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"64\"","value":"64","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"6\"","value":"6","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"64\"","value":"64","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"644c3a2cc05a29c182f\"","value":"644c3a2cc05a29c182f","valueType":"string"}
+error: undefined {"kind":"number","path":"cantidad","stringValue":"\"undefined\"","valueType":"undefined"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"644c3d2cf3527c05a29c1823f\"","value":"644c3d2cf3527c05a29c1823f","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
+error: undefined {"kind":"Number","path":"cantidad","reason":{"actual":false,"code":"ERR_ASSERTION","expected":true,"generatedMessage":true,"operator":"=="},"stringValue":"\"hola\"","value":"hola","valueType":"string"}

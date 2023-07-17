@@ -29,35 +29,35 @@ const devLogger = winston.createLogger({
             format: winston.format.combine(
                 winston.format.colorize({colors: customLevelOptions.colors}),
                 winston.format.simple()
-                )
-            }),
-            new winston.transports.File({
-                filename: './errors.log',
-                level: 'error',
-                format: winston.format.simple()
-            })
-        ]
-    })
-    
-    const prodLogger = winston.createLogger({
-        levels: customLevelOptions.levels,
-        transports: [
-            new winston.transports.Console({
-                level: 'info',
-                format: winston.format.combine(
-                    winston.format.colorize({colors: customLevelOptions.colors}),
-                    winston.format.simple()
-                    )
-                }),
-                new winston.transports.File({
-                    filename: './errors.log',
-                    level: 'error',
-                    format: winston.format.simple()
-                })
-            ]
+            )
+        }),
+        new winston.transports.File({
+            filename: './errors.log',
+            level: 'error',
+            format: winston.format.simple()
         })
+    ]
+})
+    
+const prodLogger = winston.createLogger({
+    levels: customLevelOptions.levels,
+    transports: [
+        new winston.transports.Console({
+            level: 'info',
+            format: winston.format.combine(
+                winston.format.colorize({colors: customLevelOptions.colors}),
+                winston.format.simple()
+            )
+        }),
+        new winston.transports.File({
+            filename: './errors.log',
+            level: 'error',
+            format: winston.format.simple()
+        })
+    ]
+})
         
-        let logger = configServer.mode == 'development' ? devLogger : prodLogger;
+let logger = configServer.mode == 'development' ? devLogger : prodLogger;
 
 const addLogger = (req, res, next) => {
     req.logger = logger

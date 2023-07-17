@@ -1,5 +1,6 @@
 const fs = require("fs")
 const path = require("path")
+const { logger } = require("../../utils/logger")
 const filepath = path.join(__dirname, "../fileSystem/carts.json")
 
 class CartDaoFile {
@@ -15,8 +16,8 @@ class CartDaoFile {
       } else {
       fs.writeFileSync(this.path, JSON.stringify(this.carts),'utf-8')
       }    
-    } catch (err) {
-      console.log(err) 
+    } catch (error) {
+      logger.error(error)
     } 
   }
 
@@ -29,24 +30,24 @@ class CartDaoFile {
       this.carts.push(newCart);
       await fs.promises.writeFile(this.path,JSON.stringify(this.carts, "utf-8", "\t"));
       return newCart
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      logger.error(error)
     }
   }
 
   async getCarts(){
     try {
       return this.carts;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      logger.error(error)
     }
   }
 
   async getCartById(cid){
     try{
       return this.carts.find(product => product.id === parseInt(cid))
-    }catch(err){
-      console.log(err)
+    }catch(error){
+      logger.error(error)
     }
   }
 
@@ -64,7 +65,7 @@ class CartDaoFile {
         await fs.promises.writeFile(this.path, JSON.stringify(carts, "utf-8", "\t"));
         return cart
     } catch (error) {
-      console.log(error);
+      logger.error(error)
     }
   }
 
@@ -72,8 +73,8 @@ class CartDaoFile {
     try {
       let cart = await this.getCartById(cid)
       return cart.products = []
-    } catch (err) {
-      console.log(err)
+    } catch (error) {
+      logger.error(error)
     }
   }
 
@@ -91,8 +92,8 @@ class CartDaoFile {
         return cart
       }
 
-    }catch(err){
-      console.log(err)
+    }catch(error){
+      logger.error(error)
     }
   }
 
@@ -109,7 +110,7 @@ class CartDaoFile {
         return cart
       }
     } catch (error) {
-      console.log(error)
+      logger.error(error)
     }
   }
 
@@ -125,7 +126,7 @@ class CartDaoFile {
         return cart
       }
     } catch (error) {
-      console.log(error)
+      logger.error(error)
     }
   }
 }

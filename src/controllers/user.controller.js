@@ -1,14 +1,14 @@
 const { userService, cartService } = require("../services/Services");
 const { createHash, isValidPassword } = require("../utils/bcryptHash");
 const { generateToken } = require("../utils/jwt");
+const { logger } = require("../utils/logger");
+
 
 class UserController {
 
     login = async (req, res) =>{
         try{
             let {email, password} = req.body
-            email = email.trim();
-            password = password.trim();
             if (!email || !password) {
                 return res.status(400).send({ status: 'error', message: 'El email y la contraseña son obligatorios' });
             }
@@ -43,8 +43,8 @@ class UserController {
                 httpOnly: true
             }).redirect('/')
         
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
         
     }
@@ -93,8 +93,8 @@ class UserController {
                 message: 'register success',
             })
         
-        }catch(err){
-            console.log(err)
+        }catch(error){
+            logger.error(error)
         }
     }
     
