@@ -15,6 +15,7 @@ router.post('/forgotPassword', userController.forgotpassword)
 
 router.post('/resetPassword', userController.resetPassword)
 
+router.get('/premium/:uid', userController.changeRole)
 
 //github
 router.get('/github', passport.authenticate('github', {scope:['user:email']}))

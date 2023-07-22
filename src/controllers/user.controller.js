@@ -60,8 +60,8 @@ class UserController {
             const cart= await cartService.createCart(newCart)
 
             let role = 'user'
-            if(email === 'adminCoder@coder.com'){
-                role = "admin"
+            if(email === 'premium@premium.com'){
+                role = "premium"
             }
         
             const newUser={
@@ -148,6 +148,24 @@ class UserController {
         } catch (error) {
             logger.error(error)
         }
+    }
+
+    changeRole =  async(req, res) => {
+        try {
+            const userId = req.params.uid
+            const userDB = await userService.getUserById(userId)
+            if (!userDB) return res.status(404).send({ status: "error", message: "Usuario inexistente" })
+
+            const newRole = userDB.role === "user" ? "premium" : "user";
+            userDB.role = newRole
+            await userDB.save()
+    
+            res.send({ status: "success", message: "Rol de usuario actualizado exitosamente", role: newRole })
+        } catch (error) {
+            logger.error(error)
+        }
+        
+
     }
 }
 

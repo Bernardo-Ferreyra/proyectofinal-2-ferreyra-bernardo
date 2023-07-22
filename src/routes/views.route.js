@@ -6,7 +6,7 @@ const router = Router()
 
 router.get('/', viewsController.getProducts)
 
-router.get('/realTimeProducts',passportCall('current', {session: false}),authorization('admin'), viewsController.getRealTimeProducts)
+router.get('/realTimeProducts',passportCall('current', {session: false}),authorization(['admin', 'premium']), viewsController.getRealTimeProducts)
 
 router.get('/carts/:cid', viewsController.getCartById)
 
