@@ -11,16 +11,24 @@ router.post('/register', userController.register)
 
 router.get('/logout', userController.logout)
 
-router.get('/current', passportCall('current', {session: false}),(req,res)=>{
-    res.send(req.user)
-})
+router.post('/forgotPassword', userController.forgotpassword)
 
+router.post('/resetPassword', userController.resetPassword)
+
+
+//github
 router.get('/github', passport.authenticate('github', {scope:['user:email']}))
 router.get('/githubcallback',passport.authenticate('github',{failureRedirect:'/api/session/login'}), async(req,res)=>{
     req.session.user = req.user 
     res.redirect('/')
 })
 
+
+
+
+router.get('/current', passportCall('current', {session: false}),(req,res)=>{
+    res.send(req.user)
+})
 
 
 module.exports= router

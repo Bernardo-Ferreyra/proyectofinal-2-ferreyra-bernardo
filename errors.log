@@ -35,3 +35,21 @@ error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"
 error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"644c3d2cf3527c05a29c1823f\"","value":"644c3d2cf3527c05a29c1823f","valueType":"string"}
 error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
 error: undefined {"kind":"Number","path":"cantidad","reason":{"actual":false,"code":"ERR_ASSERTION","expected":true,"generatedMessage":true,"operator":"=="},"stringValue":"\"hola\"","value":"hola","valueType":"string"}
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined

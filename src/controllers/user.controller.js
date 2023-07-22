@@ -1,7 +1,8 @@
 const { userService, cartService } = require("../services/Services");
 const { createHash, isValidPassword } = require("../utils/bcryptHash");
-const { generateToken } = require("../utils/jwt");
+const { generateToken, generateResetToken, verifyResetToken } = require("../utils/jwt");
 const { logger } = require("../utils/logger");
+const { sendResetPassMail } = require("../utils/nodemailer");
 
 
 class UserController {
@@ -104,6 +105,49 @@ class UserController {
             res.clearCookie('coderCookieToken');
             res.redirect('login')
         })
+    }
+
+    forgotpassword = async (req, res) => {
+        try {
+            let {email} = req.body
+            if (!email) return res.status(400).send({ status: 'error', message: 'El email es obligatorio' });
+            
+            const userDB = await userService.getUser({email})
+            if(!userDB) return res.status(404).send({status: 'error', message: 'Usuario inexistente'})
+
+            const resetToken = generateResetToken({userDB})
+            const resetLink = `${req.protocol}://${req.get('host')}/api/session/resetPassword?token=${resetToken}`
+            
+            await sendResetPassMail(userDB, resetLink)
+            res.send({status:'success', message: 'se ha enviado el link para resetear tu pass'})
+        } catch (error) {
+            logger.error(error)
+        }
+    }
+    
+    resetPassword = async(req, res) => {
+        try {
+            const { password } = req.body
+            const { token } = req.query
+            const verifiedToken = verifyResetToken(token)
+            if(!verifiedToken){
+                return res.status(400).send({status:'error', message:'El enlace de recuperación de contraseña es inválido o ha expirado'})
+            }
+
+            const userDB = await userService.getUser({email: verifiedToken.userDB.email})
+            if(!userDB) return res.status(404).send({status: 'error', message: 'Usuario inexistente'})
+            
+            if (isValidPassword(password, userDB)) {
+                return res.status(400).send({ status:'error', message:'La contraseña debe ser distinta a la anterior'})
+            }
+
+            userDB.password = createHash(password);
+            await userDB.save();
+
+            res.send({ status:'success', message:'La contraseña ha sido reemplazada con exito, vuelve a iniciar sesion'});
+        } catch (error) {
+            logger.error(error)
+        }
     }
 }
 

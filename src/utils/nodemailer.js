@@ -22,3 +22,18 @@ exports.sendMail = async (body)=>{
         </div>`
     })
 }
+
+exports.sendResetPassMail = async (user,resetLink)=>{
+    return await transport.sendMail({
+        from: 'RESET PASSWORD<bernii.ferreyra@gmail.com>',
+        to: 'bernii.ferreyra@gmail.com', //${user.email}
+        subject:'reset password',
+        html:`<div>
+        <h1>Hola ${user.first_name},</h1>
+        <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta.</p>
+        <p>Para continuar con el proceso, haz clic en el siguiente enlace:</p>
+        <a href="${resetLink}">${resetLink}</a>
+        <p>El enlace expirará después de 1 hora.</p>
+        </div>`
+    })
+}

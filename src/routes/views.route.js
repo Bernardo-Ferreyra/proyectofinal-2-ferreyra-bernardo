@@ -22,6 +22,11 @@ router.get('/api/session/register', (req,res)=>{
     res.render('registerForm',{})
 })
 
+router.get('/api/session/forgotPassword', (req,res)=>{
+    res.render('forgotPassword',{})
+})
+
+router.get('/api/session/resetPassword', viewsController.resetPasswordpage)
 
 
 module.exports = router

@@ -1,4 +1,5 @@
 const { productService, cartService } = require("../services/Services")
+const { verifyResetToken } = require("../utils/jwt")
 const { logger } = require("../utils/logger")
 
 class ViewsController{
@@ -87,6 +88,20 @@ class ViewsController{
             logger.error(error)
         }
     
+    }
+
+    resetPasswordpage = async (req, res) => {
+        try {
+            const { token } = req.query
+            const verifiedToken = verifyResetToken(token)
+            if(!verifiedToken){
+                return res.status(400).send({status:'error', message:'El enlace de recuperación de contraseña es inválido o ha expirado'})
+            }
+            res.render('resetPassword',{ token })
+        } catch (error) {
+            logger.error(error)
+        }
+
     }
 }
 
