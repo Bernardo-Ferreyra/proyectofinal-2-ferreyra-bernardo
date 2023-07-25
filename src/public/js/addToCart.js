@@ -1,8 +1,8 @@
 function addToCart(cartId, productId) {
-    // Get the quantity value for the selected product
-    const quantity = parseInt(document.getElementById(`quantity${productId}`).value, 10);
+  
+  const quantity = parseInt(document.getElementById(`quantity${productId}`).value, 10);
 
-    // Make a POST request to the addToCart endpoint with the chosen quantity
+
     fetch(`/api/carts/${cartId}/products/${productId}`, {
       method: 'POST',
       headers: {
@@ -10,14 +10,19 @@ function addToCart(cartId, productId) {
       },
       body: JSON.stringify({ cantidad: quantity })
     })
-      .then(response => response.json())
+      .then(async response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          const data = await response.json();
+          return await Promise.reject(data.error);
+        }
+      })
       .then(data => {
-        // Handle the response if needed
+        alert('producto agregado al carrito')
         console.log(data);
-        // You can also redirect to the cart page or show a success message
       })
       .catch(error => {
-        // Handle errors if needed
-        console.error(error);
+        alert('Error: ' + error)
       });
   }
