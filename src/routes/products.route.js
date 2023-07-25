@@ -8,13 +8,13 @@ router.get('/mockingproducts', productController.generateProductsMock)
 
 router.get('/', productController.getProducts);
 
-router.post('/' ,passportCall('current', {session: false}), authorization('admin'), productController.createProduct);
+router.post('/' ,passportCall('current', {session: false}), authorization(['admin', 'premium']), productController.createProduct);
 
 router.get('/:pid', productController.getProductById);
 
 router.put('/:pid',passportCall('current', {session: false}), authorization('admin'), productController.updateProduct);
 
-router.delete('/:pid',passportCall('current', {session: false}), authorization('admin'), productController.deleteProduct);
+router.delete('/:pid',passportCall('current', {session: false}), authorization(['admin', 'premium']), productController.deleteProduct);
 
 
 module.exports= router;

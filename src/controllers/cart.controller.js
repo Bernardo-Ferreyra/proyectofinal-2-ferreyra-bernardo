@@ -96,6 +96,12 @@ class CartController{
             const cid = req.params.cid
             const pid = req.params.pid
             const {cantidad}= req.body
+            const user = req.session.user
+            const product= await productService.getProductById(pid)
+
+            if (product.owner === user.email) {
+                return res.status(403).send({ error: 'No puedes agregar un producto que te pertenece a tu carrito.' });
+            }
             
             const addProduct= await cartService.addToCart(cid, pid, cantidad)
             !addProduct

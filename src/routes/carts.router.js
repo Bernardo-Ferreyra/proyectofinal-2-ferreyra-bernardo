@@ -19,7 +19,7 @@ router.delete('/:cid/products/:pid', cartController.deleteProductFromCart)
 
 router.put('/:cid/products/:pid', cartController.modifyProductFromCart)
 
-router.post('/:cid/products/:pid',passportCall('current', {session: false}), authorization('user'), cartController.addToCart);
+router.post('/:cid/products/:pid',passportCall('current', {session: false}), authorization(['user','premium']), cartController.addToCart);
 
 router.post('/:cid/purchase',passportCall('current', {session: false}), authorization('user'), cartController.generateTicket );
 

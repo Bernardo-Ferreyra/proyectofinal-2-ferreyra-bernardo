@@ -95,9 +95,10 @@ class ViewsController{
             const { token } = req.query
             const verifiedToken = verifyResetToken(token)
             if(!verifiedToken){
-                return res.status(400).send({status:'error', message:'El enlace de recuperación de contraseña es inválido o ha expirado'})
+                res.status(400).send({status:'error', message:'El enlace de recuperación de contraseña es inválido o ha expirado'})
+            }else{ 
+                res.render('resetPassword',{ token })
             }
-            res.render('resetPassword',{ token })
         } catch (error) {
             logger.error(error)
         }

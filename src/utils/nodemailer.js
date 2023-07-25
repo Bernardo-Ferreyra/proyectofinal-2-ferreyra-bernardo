@@ -26,7 +26,7 @@ exports.sendMail = async (body)=>{
 exports.sendResetPassMail = async (user,resetLink)=>{
     return await transport.sendMail({
         from: 'RESET PASSWORD<bernii.ferreyra@gmail.com>',
-        to: 'bernii.ferreyra@gmail.com', //${user.email}
+        to: user.email,
         subject:'reset password',
         html:`<div>
         <h1>Hola ${user.first_name},</h1>

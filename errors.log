@@ -55,3 +55,22 @@ error: undefined
 error: undefined
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64bc2f07d17f9e7a9929922o\"","value":"64bc2f07d17f9e7a9929922o","valueType":"string"}
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64\"","value":"64","valueType":"string"}
+error: undefined {"kind":"number","path":"cantidad","stringValue":"\"undefined\"","valueType":"undefined"}
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: jwt expired {"expiredAt":"2023-07-22T03:46:20.000Z","name":"TokenExpiredError"}
+error: undefined
+error: undefined
+error: Error
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined

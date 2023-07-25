@@ -29,6 +29,11 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
+    owner:{
+        type: String,
+        default: 'admin',
+        required: true
+    },
     thumbnail: [String]
 })
 
