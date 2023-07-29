@@ -20,8 +20,8 @@ class CartController{
         try{
             const carts = await cartService.getCarts()
             !carts
-            ?res.status(404).send({error: 'no hay carritos'})
-            :res.status(201).send({status:'success', payload: carts});  
+            ?res.status(500).send({error: 'no hay carritos para mostrar'})
+            :res.status(200).send({status:'success', payload: carts});  
         } catch(error){
             logger.error(error)
         }
@@ -33,7 +33,7 @@ class CartController{
             const cart = await cartService.getCartById(cid);
             !cart
             ?res.status(404).send({ error: `El carrito con ID ${cid} no existe` })
-            :res.status(201).send({status: 'success', payload: cart})
+            :res.status(200).send({status: 'success', payload: cart})
         } catch(error){
             logger.error(error)
         }
@@ -158,7 +158,7 @@ class CartController{
         
             } else {
                 const productsWithoutStockIds = productsWithoutStock.map(item => item.product._id);
-                res.status(200).send({message: 'La compra no se pudo completar', payload: productsWithoutStockIds});
+                res.status(400).send({message: 'La compra no se pudo completar', payload: productsWithoutStockIds});
             }
         }catch(error){
             logger.error(error)

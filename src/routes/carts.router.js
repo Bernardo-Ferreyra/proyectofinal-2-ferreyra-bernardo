@@ -21,7 +21,7 @@ router.put('/:cid/products/:pid', cartController.modifyProductFromCart)
 
 router.post('/:cid/products/:pid',passportCall('current', {session: false}), authorization(['user','premium','admin']), cartController.addToCart);
 
-router.post('/:cid/purchase',passportCall('current', {session: false}), authorization('user'), cartController.generateTicket );
+router.post('/:cid/purchase',passportCall('current', {session: false}), authorization(['user','premium','admin']), cartController.generateTicket );
 
 
 
