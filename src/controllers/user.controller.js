@@ -54,7 +54,7 @@ class UserController {
         try{
             const{username, first_name, last_name, email, date_of_birth, password} = req.body
             const existUser= await userService.getUser({email})
-            if(existUser) return res.send({status: 'error', message:'el email ya existe'})
+            if(existUser) return res.status(400).send({status: 'error', message:'el email ya existe'})
 
             const newCart = {products:[]}
             const cart= await cartService.createCart(newCart)
