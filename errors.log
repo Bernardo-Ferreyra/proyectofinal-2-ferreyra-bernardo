@@ -42,3 +42,6 @@ error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"
 error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"64bef0f405e2ed7782\"","value":"64bef0f405e2ed7782","valueType":"string"}
 error: undefined
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"undefined\"","value":"undefined","valueType":"string"}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"p123"}}
+error: undefined {"kind":"number","path":"cantidad","stringValue":"\"undefined\"","valueType":"undefined"}
+error: undefined {"kind":"number","path":"cantidad","stringValue":"\"undefined\"","valueType":"undefined"}

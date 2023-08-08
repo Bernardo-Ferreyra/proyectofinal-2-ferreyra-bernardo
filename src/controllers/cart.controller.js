@@ -20,8 +20,8 @@ class CartController{
         try{
             const carts = await cartService.getCarts()
             !carts
-            ?res.status(500).send({error: 'no hay carritos para mostrar'})
-            :res.status(200).send({status:'success', payload: carts});  
+            ?res.status(500).send({status:'error', error: 'no hay carritos para mostrar'})
+            :res.status(200).send({status:'success', payload: carts})
         } catch(error){
             logger.error(error)
         }
@@ -32,7 +32,7 @@ class CartController{
             const cid = req.params.cid;
             const cart = await cartService.getCartById(cid);
             !cart
-            ?res.status(404).send({ error: `El carrito con ID ${cid} no existe` })
+            ?res.status(404).send({status:'error', error: `El carrito con ID ${cid} no existe` })
             :res.status(200).send({status: 'success', payload: cart})
         } catch(error){
             logger.error(error)
@@ -84,8 +84,8 @@ class CartController{
             const {cantidad}= req.body
             let respuesta = await cartService.modifyProductFromCart(cid, pid, cantidad)
             !respuesta
-            ?res.status(400).send({error:'no se pudo modificar el producto del carrito'})
-            :res.status(200).send({status:`El producto ID:${pid} se ha modificado`, payload: respuesta});
+            ?res.status(400).send({status:'error', error:'no se pudo modificar el producto del carrito'})
+            :res.status(200).send({status:'success', payload: respuesta});
         }catch(error){
             logger.error(error)
         }
@@ -96,17 +96,17 @@ class CartController{
             const cid = req.params.cid
             const pid = req.params.pid
             const {cantidad}= req.body
-            const user = req.session.user
+            const user = req.user
             const product= await productService.getProductById(pid)
 
             if (product.owner === user.email) {
-                return res.status(403).send({ error: 'No puedes agregar un producto que te pertenece a tu carrito.' });
+                return res.status(403).send({status:'error', error: 'No puedes agregar un producto que te pertenece a tu carrito.' });
             }
             
             const addProduct= await cartService.addToCart(cid, pid, cantidad)
             !addProduct
-            ?res.status(400).send({error:'no se pudo agregar el producto'})
-            :res.status(201).send({status:'success', payload: addProduct})
+            ?res.status(400).send({status:'error', error:'no se pudo agregar el producto'})
+            :res.status(200).send({status:'success', payload: addProduct})
         }catch(error){
             logger.error(error)
         }

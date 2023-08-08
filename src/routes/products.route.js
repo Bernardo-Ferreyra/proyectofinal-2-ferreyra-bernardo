@@ -12,9 +12,9 @@ router.post('/' ,passportCall('current', {session: false}), authorization(['admi
 
 router.get('/:pid', productController.getProductById);
 
-router.put('/:pid',/* passportCall('current', {session: false}), authorization(['admin', 'premium']), */ productController.updateProduct);
+router.put('/:pid',passportCall('current', {session: false}), authorization(['admin', 'premium']), productController.updateProduct);
 
-router.delete('/:pid',/* passportCall('current', {session: false}), authorization(['admin', 'premium']), */ productController.deleteProduct);
+router.delete('/:pid',passportCall('current', {session: false}), authorization(['admin', 'premium']), productController.deleteProduct);
 
 
 module.exports= router;

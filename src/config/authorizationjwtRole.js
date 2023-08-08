@@ -5,7 +5,6 @@ const authorization = (requiredRoles) =>{
         if (!requiredRoles.includes(userRole)) {
           return res.status(403).send({ status: 'error', error: 'Not authorized' });
         }
-        /* if(req.user.role !== role) return res.status(403).send({status: 'error', error:' not permission'}) */
         next()
     }
 }

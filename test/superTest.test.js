@@ -6,12 +6,12 @@ const requester = supertest('http://localhost:8080')
 
 
 describe('Testing del proyecto C39750', ()=>{
-/*      describe('test de session', ()=>{
+     describe('TEST DE SESSION', ()=>{
         let userId 
         let userRole
         let userEmail
         let cookie 
-        it('El servicio POST en el endpoint /api/session/register debe crear un usuario correctamente', async()=>{
+        /* it('El servicio POST en el endpoint /api/session/register debe crear un usuario correctamente', async()=>{
             const userMock = {
                 username: 'userTest',
                 first_name:'UserSupertest',
@@ -80,10 +80,30 @@ describe('Testing del proyecto C39750', ()=>{
             expect(setCookieHeader).to.be.an('array');
             expect(setCookieHeader).to.have.lengthOf(1);
             expect(setCookieHeader[0]).to.include(`${cookie.name}=;`);
+        }) */
+    }) 
+
+    describe('TEST DE PRODUCTOS',() =>{
+        let prodId
+        let authCookie
+
+        before(async () => {
+            const authResponse = await requester.post('/api/session/login').send({
+                email: 'userTest@usertest.com',
+                password: 'test123'
+            });
+            authCookie = authResponse.headers['set-cookie'][0]
         })
-    })  */
-    describe('test de productos',() =>{
-        it('el endpoint POST /api/products/ debe crear un producto correctamente',async ()=>{
+
+        /* it('el endpoint GET /api/products/ debe traer todo los productos',async ()=>{
+            const response = await requester.get('/api/products')
+            expect(response).to.be.ok
+            expect(response.statusCode).to.be.equal(200)
+            expect(response.body).to.have.property('payload').that.is.an('object')
+            expect(response.body.payload).to.have.property('docs').that.is.an('array')
+        })
+
+     it('el endpoint POST /api/products/ debe crear un producto correctamente',async ()=>{
             const productMock = {
                 title: 'productoSuperTest',
                 description: 'producto de prueba Supertest', 
@@ -92,43 +112,34 @@ describe('Testing del proyecto C39750', ()=>{
                 stock: 123, 
                 category: 'producto de prueba Supertest'
             }
-            const response = await requester.post('/api/products').send(productMock)
-            console.log(response.statusCode)
-            console.log(response._body)
-            console.log(response.ok)
+            const response = await requester.post('/api/products').set('Cookie', [authCookie]).send(productMock)
+            expect(response).to.be.ok
             expect(response.statusCode).to.equal(201)
-            expect(response.body).to.have.property('payload')
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('object')
             expect(response._body.payload).to.have.property('_id')
+            prodId = response.body.payload._id
         })
 
-/*         it('el endpoint GET /api/products/ debe traer todo los productos',async ()=>{
-            const response = await requester.get('/api/products')
-            expect(response).to.be.ok
-            expect(response.statusCode).to.be.equal(200)
-            expect(response.body).to.have.property('payload').that.is.an('object')
-            expect(response.body.payload).to.have.property('docs').that.is.an('array').that.is.not.empty
-        }) */
 
-/*         it('el endpoint GET /api/products/:pid debe traer un producto por su id',async ()=>{
-            let pid = '64d0557ec14cdd337e44a8c0'
-            const response = await requester.get(`/api/products/${pid}`)
-            console.log(response.body)
+
+        it('el endpoint GET /api/products/:pid debe traer un producto por su id',async ()=>{
+            const response = await requester.get(`/api/products/${prodId}`)
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(200)
             expect(response.body).to.have.property('status').that.is.equal('success')
             expect(response.body).to.have.property('payload').that.is.an('object')
             expect(response.body.payload).to.have.property('_id')
-        }) */
+        })
 
-/*         it('El endpoint PUT /api/products/:pid debe actualizar un producto correctamente', async () => {
-            let pid = '64d0557ec14cdd337e44a8c0'
+        it('El endpoint PUT /api/products/:pid debe actualizar un producto correctamente', async () => {
             const updatedProductMock = {
                 code: 1111,
                 price: 1200,
                 stock: 232,
                 category: 'productosupersupertest'
             };
-            const response = await requester.put(`/api/products/${pid}`).send(updatedProductMock)
+            const response = await requester.put(`/api/products/${prodId}`).set('Cookie', [authCookie]).send(updatedProductMock)
             expect(response).to.be.ok
             expect(response.statusCode).to.equal(200);
             expect(response.body).to.have.property('status').that.is.equal('success')
@@ -136,21 +147,98 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.body.payload.code).to.equal(updatedProductMock.code)
             expect(response.body.payload.price).to.equal(updatedProductMock.price)
             expect(response.body.payload.category).to.equal(updatedProductMock.category)
-        }) */
-/* 
+        })
+
         it('El endpoint DELETE /api/products/:pid debe eliminar un producto correctamente', async () => {
-            let pid = '64d0557ec14cdd337e44a8c0'
-            const response = await requester.delete(`/api/products/${pid}`)
-            console.log(response)
-
-            expect(response.statusCode).to.equal(200);
-            expect(response.body).to.have.property('payload');
-            expect(response.body.payload).to.have.property('_id');
-            expect(response.body.payload._id).to.equal(petId);
+            const response = await requester.delete(`/api/products/${prodId}`).set('Cookie', [authCookie])
+            expect(response).to.be.ok
+            expect(response.statusCode).to.equal(200)
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('object')
+            expect(response.body.payload).to.have.property('_id')
+            expect(response.body.payload._id).to.equal(prodId)
         }) */
-
 
     })
 
+    describe('TEST DE CARRITOS', async()=>{
+
+        before(async () => {
+            const authResponse = await requester.post('/api/session/login').send({
+                email: 'userTest@usertest.com',
+                password: 'test123'
+            });
+            authCookie = authResponse.headers['set-cookie'][0]
+        })
+        let cartId = '64d2424394b7216859d5468e'
+/*         it('POST /api/carts/ debe crear un cart vacio',async ()=>{
+            const response = await requester.post('/api/carts')
+            console.log(response)
+            expect(response).to.be.ok
+            expect(response.statusCode).to.be.equal(201)
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('object')
+            expect(response.body.payload).to.have.property('products').that.is.an('array')
+            expect(response.body.payload).to.have.property('_id')
+
+            cartId = response.body.payload._id
+        }) */
+
+/*         it('GET /api/carts/ debe traer todos los carts',async ()=>{
+            const response = await requester.get('/api/carts')
+            expect(response).to.be.ok
+            expect(response.statusCode).to.be.equal(200)
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('array').that.is.not.empty
+        })
+
+        it('GET /api/carts/:cid debe traer un cart por su id',async ()=>{
+            const response = await requester.get(`/api/carts/${cartId}`)
+            expect(response).to.be.ok
+            expect(response.statusCode).to.be.equal(200)
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('object')
+            expect(response.body.payload).to.have.property('_id')
+            expect(response.body.payload).to.have.property('products').that.is.an('array')
+        }) */
+
+/*         it('POST /:cid/products/:pid debe agregar un producto al carrito',async ()=>{
+            let productId = '644c3cd8f3527c05a29c189c'
+            const cantidadProd = {
+                cantidad: 10
+            }
+            const response = await requester.post(`/api/carts/${cartId}/products/${productId}`).set('Cookie', [authCookie]).send(cantidadProd)
+            
+            expect(response).to.be.ok
+            expect(response.statusCode).to.be.equal(200)
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('object')
+            expect(response.body.payload).to.have.property('products').that.is.an('array')
+
+            const productObj = response.body.payload.products.find(product => product.product === productId)
+            expect(productObj).to.exist
+            expect(productObj).to.have.property('product').that.is.equal(productId)
+            expect(productObj).to.have.property('cantidad').that.is.equal(cantidadProd.cantidad)
+
+        }) */
+
+        it('PUT /api/carts/:cid debe modificar un producto dentro del carrito',async ()=>{
+            const response = await requester.put(`/api/carts/${cartId}`)
+            expect(response).to.be.ok
+            expect(response.statusCode).to.be.equal(200)
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('object')
+            expect(response.body.payload).to.have.property('_id')
+            expect(response.body.payload).to.have.property('products').that.is.an('array')
+        })
+
+
+
+
+
+
+
+
+    })
     
 })

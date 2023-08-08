@@ -41,7 +41,7 @@ class ProductController{
     createProduct = async(req, res, next)=>{
         try{
             const {title, description, price, code, stock, category, thumbnail} = req.body
-            const user = req.session.user
+            const user = req.user
 
             if(!title || !description || !price || !code || !stock || !category){
                 CustomError.createError({
@@ -90,7 +90,7 @@ class ProductController{
     deleteProduct = async(req, res)=>{
         try{
             const id = req.params.pid
-            const user = req.session.user
+            const user = req.user
 
             const product = await productService.getProductById(id)
             if (!product) return res.status(404).send({status:'error', error: `El producto con ID ${id} no existe` })
