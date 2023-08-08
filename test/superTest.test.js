@@ -6,7 +6,7 @@ const requester = supertest('http://localhost:8080')
 
 
 describe('Testing del proyecto C39750', ()=>{
-     describe('test de session', ()=>{
+/*      describe('test de session', ()=>{
         let userId 
         let userRole
         let userEmail
@@ -70,20 +70,20 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.body).to.have.property('role')
             expect(response.body.role).to.not.equal(userRole)
         })
-        it('El servicio GET /api/session/logout debe cerrar la sesión de usuario y redireccionar a /login', async()=>{
+
+        it('El servicio GET /api/session/logout debe eliminar la sesión, destruir la cookie y redireccionar a /login', async()=>{
             const response = await requester.get('/api/session/logout').set('Cookie', [`${cookie.name}=${cookie.value}`])
-            /* console.log(response) */
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(302)
-            /* console.log(response.headers['set-cookie'][0]) */
-            console.log(response)
-            console.log(response.header)
-            /* expect(response.headers['set-cookie']).to.be.an('array')
-            expect(response.headers['location']).to.be.equal('/login') */
+            expect(response.headers['location']).to.be.equal('login')
+            const setCookieHeader = response.headers['set-cookie'];
+            expect(setCookieHeader).to.be.an('array');
+            expect(setCookieHeader).to.have.lengthOf(1);
+            expect(setCookieHeader[0]).to.include(`${cookie.name}=;`);
         })
-    }) 
+    })  */
     describe('test de productos',() =>{
-/*         it('el endpoint POST /api/products/ debe crear un producto correctamente',async ()=>{
+        it('el endpoint POST /api/products/ debe crear un producto correctamente',async ()=>{
             const productMock = {
                 title: 'productoSuperTest',
                 description: 'producto de prueba Supertest', 
@@ -99,7 +99,7 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.statusCode).to.equal(201)
             expect(response.body).to.have.property('payload')
             expect(response._body.payload).to.have.property('_id')
-        }) */
+        })
 
 /*         it('el endpoint GET /api/products/ debe traer todo los productos',async ()=>{
             const response = await requester.get('/api/products')

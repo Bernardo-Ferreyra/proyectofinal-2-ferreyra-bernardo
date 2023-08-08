@@ -75,21 +75,7 @@ class UserController {
                 password : createHash(password)
             }
             const userDB = await userService.createUser(newUser)
-
-/*             const accessToken = generateToken({
-                first_name: newUser.first_name,
-                last_name: newUser.last_name,
-                email: newUser.email,
-                date_of_birth: newUser.date_of_birth,
-                username: newUser.username,
-                cart: newUser.cart,
-                role: newUser.role
-            }) */
-        
-            res/* .cookie('coderCookieToken', accessToken, {
-                maxAge: 60*60*100,
-                httpOnly: true
-            }) */.status(201).send({status:'success', payload: userDB})
+            res.status(201).send({status:'success', payload: userDB})
         
         }catch(error){
             logger.error(error)
@@ -99,7 +85,7 @@ class UserController {
     logout= (req,res)=>{
         req.session.destroy(err=>{
             if(err){res.send({status: 'error', error: err})}
-            res.clearCookie('coderCookieToken');
+            res.clearCookie('coderCookieToken')
             res.redirect('login')
         })
     }
