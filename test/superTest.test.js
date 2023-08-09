@@ -11,7 +11,11 @@ describe('Testing del proyecto C39750', ()=>{
         let userRole
         let userEmail
         let cookie 
-        /* it('El servicio POST en el endpoint /api/session/register debe crear un usuario correctamente', async()=>{
+
+        //este usuario creado es utilizado en los demas test de session, 
+        //si se ejecuta mas de una vez cambiar email de userMock
+        //ya que fallaria debido a que el campo email es unico y no se puede volver a crear
+        it('POST /api/session/register debe crear un usuario correctamente', async()=>{
             const userMock = {
                 username: 'userTest',
                 first_name:'UserSupertest',
@@ -34,7 +38,7 @@ describe('Testing del proyecto C39750', ()=>{
         })
 
 
-        it('el servicio POST /api/session/login debe logear un usuario correctamente y devolver una cookie', async()=>{
+        it('POST /api/session/login debe logear un usuario correctamente y devolver una cookie', async()=>{
             const userMock = {
                 email: 'userTest@usertest.com',
                 password: 'test123'
@@ -52,7 +56,7 @@ describe('Testing del proyecto C39750', ()=>{
             expect(cookie.value).to.be.ok
         })
 
-        it('El servicio GET /api/session/current debe enviar el jwt del usuario y devolver los datos', async()=>{
+        it('GET /api/session/current debe enviar el jwt del usuario y devolver los datos', async()=>{
             const response =await requester.get('/api/session/current').set('Cookie',[`${cookie.name}=${cookie.value}`])
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(200)
@@ -62,7 +66,7 @@ describe('Testing del proyecto C39750', ()=>{
             expect(cookie.value).to.be.ok
         })
 
-        it('El servicio GET /api/session/preimum/:uid debe cambiar el role del usuario de user a premium y viceversa', async()=>{
+        it('GET /api/session/preimum/:uid debe cambiar el role del usuario de user a premium y viceversa', async()=>{
             const response =await requester.get(`/api/session/premium/${userId}`)
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(200)
@@ -71,7 +75,7 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.body.role).to.not.equal(userRole)
         })
 
-        it('El servicio GET /api/session/logout debe eliminar la sesión, destruir la cookie y redireccionar a /login', async()=>{
+        it('GET /api/session/logout debe eliminar la sesión, destruir la cookie y redireccionar a /login', async()=>{
             const response = await requester.get('/api/session/logout').set('Cookie', [`${cookie.name}=${cookie.value}`])
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(302)
@@ -80,7 +84,7 @@ describe('Testing del proyecto C39750', ()=>{
             expect(setCookieHeader).to.be.an('array');
             expect(setCookieHeader).to.have.lengthOf(1);
             expect(setCookieHeader[0]).to.include(`${cookie.name}=;`);
-        }) */
+        })
     }) 
 
     describe('TEST DE PRODUCTOS',() =>{
@@ -95,7 +99,7 @@ describe('Testing del proyecto C39750', ()=>{
             authCookie = authResponse.headers['set-cookie'][0]
         })
 
-        /* it('el endpoint GET /api/products/ debe traer todo los productos',async ()=>{
+        it('GET /api/products/ debe traer todo los productos',async ()=>{
             const response = await requester.get('/api/products')
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(200)
@@ -103,7 +107,7 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.body.payload).to.have.property('docs').that.is.an('array')
         })
 
-     it('el endpoint POST /api/products/ debe crear un producto correctamente',async ()=>{
+     it('POST /api/products/ debe crear un producto correctamente',async ()=>{
             const productMock = {
                 title: 'productoSuperTest',
                 description: 'producto de prueba Supertest', 
@@ -123,7 +127,7 @@ describe('Testing del proyecto C39750', ()=>{
 
 
 
-        it('el endpoint GET /api/products/:pid debe traer un producto por su id',async ()=>{
+        it('GET /api/products/:pid debe traer un producto por su id',async ()=>{
             const response = await requester.get(`/api/products/${prodId}`)
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(200)
@@ -132,7 +136,7 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.body.payload).to.have.property('_id')
         })
 
-        it('El endpoint PUT /api/products/:pid debe actualizar un producto correctamente', async () => {
+        it('PUT /api/products/:pid debe actualizar un producto correctamente', async () => {
             const updatedProductMock = {
                 code: 1111,
                 price: 1200,
@@ -149,7 +153,7 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.body.payload.category).to.equal(updatedProductMock.category)
         })
 
-        it('El endpoint DELETE /api/products/:pid debe eliminar un producto correctamente', async () => {
+        it('DELETE /api/products/:pid debe eliminar un producto correctamente', async () => {
             const response = await requester.delete(`/api/products/${prodId}`).set('Cookie', [authCookie])
             expect(response).to.be.ok
             expect(response.statusCode).to.equal(200)
@@ -157,12 +161,13 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.body).to.have.property('payload').that.is.an('object')
             expect(response.body.payload).to.have.property('_id')
             expect(response.body.payload._id).to.equal(prodId)
-        }) */
+        })
 
     })
 
     describe('TEST DE CARRITOS', async()=>{
-
+        let cartId
+        let productId = '644c3cd8f3527c05a29c189c'
         before(async () => {
             const authResponse = await requester.post('/api/session/login').send({
                 email: 'userTest@usertest.com',
@@ -170,10 +175,9 @@ describe('Testing del proyecto C39750', ()=>{
             });
             authCookie = authResponse.headers['set-cookie'][0]
         })
-        let cartId = '64d2424394b7216859d5468e'
-/*         it('POST /api/carts/ debe crear un cart vacio',async ()=>{
+
+        it('POST /api/carts/ debe crear un cart vacio',async ()=>{
             const response = await requester.post('/api/carts')
-            console.log(response)
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(201)
             expect(response.body).to.have.property('status').that.is.equal('success')
@@ -182,9 +186,9 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.body.payload).to.have.property('_id')
 
             cartId = response.body.payload._id
-        }) */
+        })
 
-/*         it('GET /api/carts/ debe traer todos los carts',async ()=>{
+        it('GET /api/carts/ debe traer todos los carts',async ()=>{
             const response = await requester.get('/api/carts')
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(200)
@@ -200,10 +204,9 @@ describe('Testing del proyecto C39750', ()=>{
             expect(response.body).to.have.property('payload').that.is.an('object')
             expect(response.body.payload).to.have.property('_id')
             expect(response.body.payload).to.have.property('products').that.is.an('array')
-        }) */
+        })
 
-/*         it('POST /:cid/products/:pid debe agregar un producto al carrito',async ()=>{
-            let productId = '644c3cd8f3527c05a29c189c'
+        it('POST /api/carts/:cid/products/:pid debe agregar un producto al carrito',async ()=>{
             const cantidadProd = {
                 cantidad: 10
             }
@@ -220,16 +223,77 @@ describe('Testing del proyecto C39750', ()=>{
             expect(productObj).to.have.property('product').that.is.equal(productId)
             expect(productObj).to.have.property('cantidad').that.is.equal(cantidadProd.cantidad)
 
-        }) */
+        })
 
-        it('PUT /api/carts/:cid debe modificar un producto dentro del carrito',async ()=>{
-            const response = await requester.put(`/api/carts/${cartId}`)
+        it('PUT /api/carts/:cid/products/:pid debe modificar un producto dentro del carrito',async ()=>{
+            const cantidadProd = {
+                cantidad: 12
+            }
+            const response = await requester.put(`/api/carts/${cartId}/products/${productId}`).send(cantidadProd)
             expect(response).to.be.ok
             expect(response.statusCode).to.be.equal(200)
             expect(response.body).to.have.property('status').that.is.equal('success')
             expect(response.body).to.have.property('payload').that.is.an('object')
             expect(response.body.payload).to.have.property('_id')
             expect(response.body.payload).to.have.property('products').that.is.an('array')
+
+            const productObj = response.body.payload.products.find(product => product.product === productId)
+            expect(productObj).to.exist
+            expect(productObj).to.have.property('product').that.is.equal(productId)
+            expect(productObj).to.have.property('cantidad').that.is.equal(cantidadProd.cantidad)
+        })
+
+        it('PUT /api/carts/:cid debe modificar el carrito completo',async ()=>{
+            const modifiedCart = [
+                {
+                    product: '644c3d40f3527c05a29c18a1',
+                    cantidad: 15
+                },
+                {
+                    product: '644c3d2cf3527c05a29c189f',
+                    cantidad: 5
+                }
+            ]
+
+            const response = await requester.put(`/api/carts/${cartId}`).send(modifiedCart)
+            expect(response).to.be.ok
+            expect(response.statusCode).to.be.equal(200)
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('object')
+            expect(response.body.payload).to.have.property('_id').that.is.equal(cartId)
+
+            const responseProducts = response.body.payload.products
+            expect(responseProducts).to.be.an('array').with.lengthOf(modifiedCart.length)
+            for (let i = 0; i < modifiedCart.length; i++) {
+                expect(responseProducts[i]).to.deep.equal(modifiedCart[i]);
+            }
+    
+        })
+
+        it('DELETE /api/carts/:cid/products/:pid debe eliminar un producto del carrito',async ()=>{
+            let deleteProd = '644c3d40f3527c05a29c18a1'
+            const response = await requester.delete(`/api/carts/${cartId}/products/${deleteProd}`)
+            expect(response).to.be.ok
+            expect(response.statusCode).to.be.equal(200)
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('object')
+            expect(response.body.payload).to.have.property('_id').that.is.equal(cartId)
+
+            const updatedProducts = response.body.payload.products;
+            const deletedProductExists = updatedProducts.some(product => product._id === deleteProd);
+            expect(deletedProductExists).to.be.false
+    
+        })
+
+        it('DELETE /api/carts/:cid debe vaciar el carrito',async ()=>{
+            const response = await requester.delete(`/api/carts/${cartId}`)
+            expect(response).to.be.ok
+            expect(response.statusCode).to.be.equal(200)
+            expect(response.body).to.have.property('status').that.is.equal('success')
+            expect(response.body).to.have.property('payload').that.is.an('object')
+            expect(response.body.payload).to.have.property('_id').that.is.equal(cartId)
+            expect(response.body.payload.products).to.be.an('array').that.is.empty
+    
         })
 
 

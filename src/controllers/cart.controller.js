@@ -44,7 +44,7 @@ class CartController{
             const cid = req.params.cid
             let respuesta= await cartService.emptyCart(cid)
             !respuesta
-            ?res.status(400).send({error:'no se pudo vaciar el carrito'})
+            ?res.status(400).send({status:'error', error:'no se pudo vaciar el carrito'})
             :res.status(200).send({status: 'success', payload: respuesta})
         }catch(error){
             logger.error(error)
@@ -57,8 +57,8 @@ class CartController{
             const pid = req.params.pid
             let respuesta = await cartService.deleteProductFromCart(cid,pid)
             !respuesta
-            ?res.status(400).send({error:'no se pudo eliminar el producto del carrito'})
-            :res.status(200).send({ status:`El producto ID:${pid} se ha eliminado del carrito`, payload: respuesta});
+            ?res.status(400).send({status:'error', error:'no se pudo eliminar el producto del carrito'})
+            :res.status(200).send({ status:'success', payload: respuesta})
         }catch(error){
             logger.error(error)
         }
@@ -70,8 +70,8 @@ class CartController{
             const newCart= req.body
             let respuesta= await cartService.modifyCart(cid, newCart)
             !respuesta
-            ?res.status(400).send({error:'No se pudo modificar el carrito'})
-            :res.status(200).send({status: 'Se ha modificado el carrito', payload: respuesta})
+            ?res.status(400).send({status:'error', error:'No se pudo modificar el carrito'})
+            :res.status(200).send({status: 'success', payload: respuesta})
         }catch(error){
             logger.error(error)
         }
@@ -82,7 +82,7 @@ class CartController{
             const cid = req.params.cid
             const pid = req.params.pid
             const {cantidad}= req.body
-            let respuesta = await cartService.modifyProductFromCart(cid, pid, cantidad)
+            const respuesta = await cartService.modifyProductFromCart(cid, pid, cantidad)
             !respuesta
             ?res.status(400).send({status:'error', error:'no se pudo modificar el producto del carrito'})
             :res.status(200).send({status:'success', payload: respuesta});
