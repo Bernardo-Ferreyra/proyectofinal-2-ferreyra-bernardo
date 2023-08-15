@@ -1,24 +1,3 @@
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
-error: undefined
-error: undefined
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644\"","value":"644","valueType":"string"}
-error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"101"}}
-error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"101"}}
-error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"101"}}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"123dscx33\"","value":"123dscx33","valueType":"string"}
-error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"101"}}
-error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"101"}}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"123\"","value":"123","valueType":"string"}
-error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"101"}}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"647e4a4da28\"","value":"647e4a4da28","valueType":"string"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"647e4a4da28\"","value":"647e4a4da28","valueType":"string"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644fd13ea46fc7\"","value":"644fd13ea46fc7","valueType":"string"}
-error: undefined {"kind":"embedded","path":"products","reason":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"ObjectId('644c3cd8f3527c05a29c189c')\" (type string) at path \"product\" because of \"BSONError\"","name":"CastError","path":"product","reason":{},"stringValue":"\"ObjectId('644c3cd8f3527c05a29c189c')\"","value":"ObjectId('644c3cd8f3527c05a29c189c')","valueType":"string"},"stringValue":"\"{ product: \"ObjectId('644c3cd8f3527c05a29c189c')\", cantidad: 1 }\"","value":{"cantidad":1,"product":"ObjectId('644c3cd8f3527c05a29c189c')"},"valueType":"Object"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"647e48b7a28\"","value":"647e48b7a28","valueType":"string"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"647e4a4da\"","value":"647e4a4da","valueType":"string"}
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64a0bb6536\"","value":"64a0bb6536","valueType":"string"}
 error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"112"}}
 error: One or more properties are incomplete or not valid
@@ -29,22 +8,6 @@ error: One or more properties are incomplete or not valid
     # code: needs to be a string, received => 1122
     #stock: needs to be a number, received => 232
     #category: needs to be string, received => prueba 12
-    
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"644c3cd8f3527c05\"","value":"644c3cd8f3527c05","valueType":"string"}
-error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"101"}}
-error: undefined
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"6485be02f7806de\"","value":"6485be02f7806de","valueType":"string"}
-error: undefined
-error: undefined
-error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"64bef0f405e2ed778\"","value":"64bef0f405e2ed778","valueType":"string"}
-error: undefined
-error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"64bef0f405e2ed7782\"","value":"64bef0f405e2ed7782","valueType":"string"}
-error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"64bef0f405e2ed7782\"","value":"64bef0f405e2ed7782","valueType":"string"}
-error: undefined
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"undefined\"","value":"undefined","valueType":"string"}
-error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"p123"}}
-error: undefined {"kind":"number","path":"cantidad","stringValue":"\"undefined\"","valueType":"undefined"}
-error: undefined {"kind":"number","path":"cantidad","stringValue":"\"undefined\"","valueType":"undefined"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"undefined\"","value":"undefined","valueType":"string"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"undefined\"","value":"undefined","valueType":"string"}
-error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"undefined\"","value":"undefined","valueType":"string"}
+
+error: undefined {"kind":"date","path":"last_connection","reason":{"actual":false,"code":"ERR_ASSERTION","expected":true,"generatedMessage":true,"operator":"=="},"stringValue":"\"14/8/2023 21:32:01\"","value":"14/8/2023 21:32:01","valueType":"string"}
+error: undefined {"kind":"date","path":"last_connection","reason":{"actual":false,"code":"ERR_ASSERTION","expected":true,"generatedMessage":true,"operator":"=="},"stringValue":"\"Invalid Date\"","value":null,"valueType":"Date"}

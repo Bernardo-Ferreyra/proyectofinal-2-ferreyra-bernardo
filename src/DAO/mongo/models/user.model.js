@@ -18,7 +18,7 @@ const userSchema = new Schema({
         unique: true
     },
     date_of_birth:{
-        type: Date,
+        type: String,
         required: true
     },
     username:{
@@ -37,7 +37,21 @@ const userSchema = new Schema({
     password:{
         type: String,
         required: true
+    },
+    documents: [{
+        name: {
+            type: String,
+            required: true
+        },
+        reference: {
+            type: String,
+            required: true
+        }
+    }], 
+    last_connection: {
+        type: String
     }
+       
 })
 
 

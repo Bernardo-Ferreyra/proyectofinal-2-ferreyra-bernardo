@@ -30,6 +30,14 @@ class UserManagerMongo{
         }
     }
 
+    async updateUser(uid,currentDate){
+        try {
+            return await this.userModel.updateOne({ _id: uid }, { $set: { last_connection: currentDate } })
+        } catch (error) {
+            logger.error(error)
+        }
+    }
+
 }
 
 module.exports= UserManagerMongo

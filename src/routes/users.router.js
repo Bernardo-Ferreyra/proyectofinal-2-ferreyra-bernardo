@@ -17,6 +17,8 @@ router.post('/resetPassword', userController.resetPassword)
 
 router.get('/premium/:uid', userController.changeRole)
 
+/* router.post('/:uid/documents') */
+
 //github
 router.get('/github', passport.authenticate('github', {scope:['user:email']}))
 router.get('/githubcallback',passport.authenticate('github',{failureRedirect:'/api/session/login'}), async(req,res)=>{

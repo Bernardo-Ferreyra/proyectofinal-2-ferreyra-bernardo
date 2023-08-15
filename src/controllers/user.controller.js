@@ -11,7 +11,7 @@ class UserController {
         try{
             let {email, password} = req.body
             if (!email || !password) {
-                return res.status(400).send({ status: 'error', error: 'El email y la contraseña son obligatorios' });
+                return res.status(400).send({ status: 'error', error: 'El email y la contraseña son obligatorios' })
             }
         
             const userDB = await userService.getUser({email})
@@ -19,6 +19,9 @@ class UserController {
         
             if(!isValidPassword(password, userDB)) return res.status(401).send({status:'error', error:'contraseña incorrecta'})
         
+            const currentDate = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
+            await userService.updateUser(userDB._id, currentDate )
+
             req.session.user ={
                 first_name: userDB.first_name,
                 last_name: userDB.last_name,
@@ -69,7 +72,7 @@ class UserController {
                 first_name,
                 last_name,
                 email,
-                date_of_birth,
+                date_of_birth: new Date(date_of_birth).toLocaleDateString(),
                 cart: cart._id,
                 role: role,
                 password : createHash(password)
@@ -82,12 +85,23 @@ class UserController {
         }
     }
     
-    logout= (req,res)=>{
-        req.session.destroy(err=>{
-            if(err){res.send({status: 'error', error: err})}
-            res.clearCookie('coderCookieToken')
-            res.redirect('login')
-        })
+    logout= async(req,res)=>{
+        try {
+            const userDB = await userService.getUser({ email: req.session.user.email })
+            if (userDB) {
+                const currentDate = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
+                await userService.updateUser(userDB._id, currentDate )
+            }
+
+            req.session.destroy(err=>{
+                if(err){res.send({status: 'error', error: err})}
+                res.clearCookie('coderCookieToken')
+                res.redirect('login')
+            })
+        } catch (error) {
+            logger.error(error)
+        }
+
     }
 
     forgotpassword = async (req, res) => {

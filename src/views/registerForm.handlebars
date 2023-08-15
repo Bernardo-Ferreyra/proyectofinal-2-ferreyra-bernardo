@@ -3,7 +3,7 @@
     <div class="w-auto h-auto bg-light d-flex flex-column align-items-center justify-content-between rounded border border-secondary">
         <h1 class="my-4 ">Register</h1>
 
-        <form class="w-100 px-4 mx-5" action='/api/session/register' method="POST">
+        <form class="w-100 px-4 mx-5" action='/api/session/register' method="POST" id="registrationForm">
             <div class="form-group row">
 
                 <div class="mb-2 col">
@@ -12,8 +12,13 @@
                 </div>
                 <div class="mb-2 col">
                     <label for="password">Password</label>
-                    <input class="form-control" type="text" name="password" required placeholder="password">
+                    <input id="passwordField" class="form-control" type="password" name="password" required placeholder="password">
+                    <div class="checkbox">
+                        <input type="checkbox" id="showPasswordCheckbox" onchange="showPass()">
+                        <span class="label ">Show password</span>
+                    </div>
                 </div>
+
             </div>
             <div class="form-group row">
                 <div class="mb-2 col">
@@ -43,3 +48,6 @@
             
     </div>
 </section>
+
+<script src="/static/js/registerForm.js"></script>
+<script src="/static/js/showPass.js"></script>
