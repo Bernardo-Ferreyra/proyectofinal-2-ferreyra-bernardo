@@ -2,6 +2,7 @@ const {Router} = require('express')
 const passport = require('passport')
 const { passportCall } = require('../config/passportCall.js')
 const userController = require('../controllers/user.controller.js')
+const { uploader } = require('../utils/multer.js')
 const router= Router()
 
 
@@ -17,7 +18,18 @@ router.post('/resetPassword', userController.resetPassword)
 
 router.get('/premium/:uid', userController.changeRole)
 
-router.post('/:uid/documents', userController.uploadDocuments)
+router.post('/documents', uploader.array('uploads'), async(req, res)=>{
+    try {
+        res.status(200).send({
+            status: 'success',
+            message: 'se subió correctamente'
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
+})
+
 
 //github
 router.get('/github', passport.authenticate('github', {scope:['user:email']}))

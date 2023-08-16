@@ -163,13 +163,14 @@ class UserController {
         }
     }
 
-    uploadDocuments =  async(req, res) => {
+/*     uploadDocuments =  async(req, res) => {
         try {
-            res.send('funciona upload documents')
+            const userId = req.params.uid
+            
         } catch (error) {
             logger.error(error)
         }
-    }
+    } */
 }
 
 module.exports= new UserController()

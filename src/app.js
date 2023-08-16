@@ -79,7 +79,7 @@ app.use(addLogger)
 
 app.use(routerServer)
 
-app.use(errorHandler)
+/* app.use(errorHandler) */
 
 
 //realtimeproducts
