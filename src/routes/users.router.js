@@ -17,7 +17,7 @@ router.post('/resetPassword', userController.resetPassword)
 
 router.get('/premium/:uid', userController.changeRole)
 
-/* router.post('/:uid/documents') */
+router.post('/:uid/documents', userController.uploadDocuments)
 
 //github
 router.get('/github', passport.authenticate('github', {scope:['user:email']}))

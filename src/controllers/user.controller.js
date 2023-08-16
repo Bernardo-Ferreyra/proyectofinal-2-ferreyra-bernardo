@@ -161,8 +161,14 @@ class UserController {
         } catch (error) {
             logger.error(error)
         }
-        
+    }
 
+    uploadDocuments =  async(req, res) => {
+        try {
+            res.send('funciona upload documents')
+        } catch (error) {
+            logger.error(error)
+        }
     }
 }
 
