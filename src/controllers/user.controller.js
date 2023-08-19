@@ -154,20 +154,20 @@ class UserController {
             if (!userDB) return res.status(404).send({ status: "error", error: "Usuario inexistente" })
 
             function userHasRequiredDocuments(user) {
-                const requiredDocuments = ["Identificacion", "Comprobante de domicilio", "Comprobante de estado de cuenta"];
+                const requiredDocuments = ["Identificacion", "Comprobante de domicilio", "Comprobante de estado de cuenta"]
             
                 for (const requiredDocument of requiredDocuments) {
                     const matchingDocument = user.documents.find(doc => {
-                        const docNameWithoutExtension = doc.name.split('.').slice(0, -1).join('.'); // Obtiene el nombre sin extensión
-                        return docNameWithoutExtension === requiredDocument;
+                        const docNameWithoutExtension = doc.name.split('.').slice(0, -1).join('.') // Obtiene el nombre sin extensión
+                        return docNameWithoutExtension === requiredDocument
                     })
                         
                     if (!matchingDocument) {
-                        return false;
+                        return false
                     }
                 }
             
-                return true;
+                return true
             }
 
             if (userDB.role === "user") {
