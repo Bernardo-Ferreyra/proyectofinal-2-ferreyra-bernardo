@@ -104,6 +104,7 @@ class ViewsController{
         }
 
     }
+
 }
 
 module.exports = new ViewsController()

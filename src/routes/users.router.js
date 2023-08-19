@@ -18,17 +18,7 @@ router.post('/resetPassword', userController.resetPassword)
 
 router.get('/premium/:uid', userController.changeRole)
 
-router.post('/documents', uploader.array('uploads'), async(req, res)=>{
-    try {
-        res.status(200).send({
-            status: 'success',
-            message: 'se subió correctamente'
-        })
-    } catch (error) {
-        console.log(error)
-    }
-
-})
+router.post('/:uid/documents', uploader.array('uploads'), userController.uploadDocuments)
 
 
 //github

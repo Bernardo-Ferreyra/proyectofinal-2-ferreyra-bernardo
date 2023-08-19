@@ -28,9 +28,9 @@ router.get('/api/session/forgotPassword', (req,res)=>{
 
 router.get('/api/session/resetPassword', viewsController.resetPasswordpage)
 
-router.get('/api/session/documents', (req,res) =>{
+/* router.get('/api/session/documents', (req,res) =>{
     res.render('uploadDocuments',{})
-})
+}) */
 
 
 module.exports = router

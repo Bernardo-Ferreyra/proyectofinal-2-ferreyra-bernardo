@@ -30,9 +30,9 @@ class UserManagerMongo{
         }
     }
 
-    async updateUser(uid,currentDate){
+    async updateUser(uid, updateData){
         try {
-            return await this.userModel.updateOne({ _id: uid }, { $set: { last_connection: currentDate } })
+            return await this.userModel.updateOne({ _id: uid }, { $set: updateData })
         } catch (error) {
             logger.error(error)
         }
