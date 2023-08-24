@@ -38,6 +38,14 @@ class UserManagerMongo{
         }
     }
 
+    async getAllUsers(){
+        try{
+            return await this.userModel.find({}).lean()
+        }catch(err){
+            return new Error(err)
+        }
+    }
+
 }
 
 module.exports= UserManagerMongo

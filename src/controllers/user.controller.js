@@ -1,3 +1,4 @@
+const { UserDto } = require("../dto/user.dto");
 const { userService, cartService } = require("../services/Services");
 const { createHash, isValidPassword } = require("../utils/bcryptHash");
 const { generateToken, generateResetToken, verifyResetToken } = require("../utils/jwt");
@@ -209,6 +210,41 @@ class UserController {
         }
     
     }
+
+    getAllUsers = async(req, res) =>{
+        try {
+            /* const {limit= 5}= req.query
+            const{page=1} = req.query
+            const { sort } = req.query; */
+            
+            const allUsers = await userService.getAllUsers()
+            if (!allUsers || allUsers.length === 0) {
+                return res.status(500).send({ status: 'error', error: 'no hay usuarios para mostrar' });
+            }
+
+            const response = allUsers.map(user=> new UserDto(user))
+            res.status(200).send({status: 'success', payload: response})
+            
+        } catch (error) {
+            logger.error(error)
+        }
+    }
+
+    deleteUsers = async(req, res) =>{
+        try {
+            const allUsers = await userService.getAllUsers()
+            if (!allUsers || allUsers.length === 0) {
+                return res.status(500).send({ status: 'error', error: 'no hay usuarios' });
+            }
+
+            const response = allUsers.map(user=> new UserDto(user))
+            res.status(200).send({status: 'success', payload: response})
+        } catch (error) {
+            logger.error(error)
+        }
+    }
+
+
 }
 
 module.exports= new UserController()

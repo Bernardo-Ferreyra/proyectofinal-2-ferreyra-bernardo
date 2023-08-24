@@ -20,6 +20,10 @@ router.get('/premium/:uid', userController.changeRole)
 
 router.post('/:uid/documents', uploader.array('uploads'), userController.uploadDocuments)
 
+router.get('/users', userController.getAllUsers)
+
+router.get('/deleteUsers', userController.deleteUsers)
+
 
 //github
 router.get('/github', passport.authenticate('github', {scope:['user:email']}))
