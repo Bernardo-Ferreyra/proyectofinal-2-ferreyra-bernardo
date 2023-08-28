@@ -42,10 +42,17 @@ class UserManagerMongo{
         try{
             return await this.userModel.find({}).lean()
         }catch(err){
-            return new Error(err)
+            logger.error(err)
         }
     }
 
+    async deleteUser(uid){
+        try{
+            return await this.userModel.deleteOne({_id: uid});
+        }catch(error){
+            logger.error(error)
+        }
+    }
 }
 
 module.exports= UserManagerMongo

@@ -28,6 +28,6 @@ router.get('/api/session/forgotPassword', (req,res)=>{
 
 router.get('/api/session/resetPassword', viewsController.resetPasswordpage)
 
-
+router.get('/api/session/usersControlPanel', viewsController.usersControlPanel)
 
 module.exports = router

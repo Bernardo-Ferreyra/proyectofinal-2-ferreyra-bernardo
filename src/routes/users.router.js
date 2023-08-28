@@ -22,7 +22,9 @@ router.post('/:uid/documents', uploader.array('uploads'), userController.uploadD
 
 router.get('/users', userController.getAllUsers)
 
-router.get('/deleteUsers', userController.deleteUsers)
+router.post('/deleteUsers', userController.deleteUsers)
+
+router.delete('/:uid/deleteUser', userController.deleteUser)
 
 
 //github

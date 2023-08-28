@@ -1,4 +1,4 @@
-const { productService, cartService } = require("../services/Services")
+const { productService, cartService, userService } = require("../services/Services")
 const { verifyResetToken } = require("../utils/jwt")
 const { logger } = require("../utils/logger")
 
@@ -104,6 +104,24 @@ class ViewsController{
         }
 
     }
+
+    usersControlPanel = async (req, res) => {
+        try {
+            let user = req.session.user
+            const allUsers = await userService.getAllUsers()
+
+            res.render('usersControlPanel', {
+                title: "Lista de usuarios",
+                allUsers: allUsers,
+                user
+            })
+        } catch (error) {
+            logger.error(error)
+        }
+
+    }
+
+
 
 }
 

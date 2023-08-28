@@ -3,7 +3,8 @@ const { userService, cartService } = require("../services/Services");
 const { createHash, isValidPassword } = require("../utils/bcryptHash");
 const { generateToken, generateResetToken, verifyResetToken } = require("../utils/jwt");
 const { logger } = require("../utils/logger");
-const { sendResetPassMail } = require("../utils/nodemailer");
+const { sendResetPassMail, sendMailDeletedUser } = require("../utils/nodemailer");
+const fs = require('fs')
 
 
 class UserController {
@@ -20,7 +21,7 @@ class UserController {
         
             if(!isValidPassword(password, userDB)) return res.status(401).send({status:'error', error:'contraseña incorrecta'})
         
-            const currentDate = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
+            const currentDate = new Date()
             await userService.updateUser(userDB._id, {last_connection: currentDate})
 
             req.session.user ={
@@ -90,7 +91,7 @@ class UserController {
         try {
             const userDB = await userService.getUser({ email: req.session.user.email })
             if (userDB) {
-                const currentDate = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
+                const currentDate = new Date()
                 await userService.updateUser(userDB._id, {last_connection: currentDate})
             }
 
@@ -212,14 +213,10 @@ class UserController {
     }
 
     getAllUsers = async(req, res) =>{
-        try {
-            /* const {limit= 5}= req.query
-            const{page=1} = req.query
-            const { sort } = req.query; */
-            
+        try {            
             const allUsers = await userService.getAllUsers()
             if (!allUsers || allUsers.length === 0) {
-                return res.status(500).send({ status: 'error', error: 'no hay usuarios para mostrar' });
+                return res.status(500).send({ status: 'error', error: 'No hay usuarios para mostrar' });
             }
 
             const response = allUsers.map(user=> new UserDto(user))
@@ -232,18 +229,57 @@ class UserController {
 
     deleteUsers = async(req, res) =>{
         try {
+            const currentDate = new Date();
+            const twoDaysAgo = new Date(currentDate - 3* 60  * 1000/* 2 * 24 * 60 * 60 * 1000 */)
+
             const allUsers = await userService.getAllUsers()
-            if (!allUsers || allUsers.length === 0) {
-                return res.status(500).send({ status: 'error', error: 'no hay usuarios' });
+            
+            const inactiveUsers = allUsers.filter(user => {
+                const lastConnectionDate = new Date(user.last_connection)
+                return lastConnectionDate <= twoDaysAgo
+            })
+            if (inactiveUsers.length === 0) {
+                return res.status(200).send({ status: 'success', message: 'No hay usuarios inactivos para eliminar' });
             }
 
-            const response = allUsers.map(user=> new UserDto(user))
-            res.status(200).send({status: 'success', payload: response})
+            for (const user of inactiveUsers) {
+                if (!user.uploadedDocuments) {
+                    const userId = user._id;
+                    const uploadFolders = ['documents', 'products', 'profiles']
+                    for (const folder of uploadFolders) {
+                        const userFolderPath = `${__dirname}/../files/${folder}/${userId}`
+                        if (fs.existsSync(userFolderPath)) {
+                            const files = fs.readdirSync(userFolderPath)
+                            for (const file of files) {
+                                const filePath = `${userFolderPath}/${file}`
+                                if (fs.statSync(filePath).isFile()) {
+                                    fs.unlinkSync(filePath);
+                                }
+                            }
+                            fs.rmdirSync(userFolderPath);
+                        }
+                    }
+                }
+                await sendMailDeletedUser(user)
+                await userService.deleteUser(user._id);
+            }
+    
+            res.status(200).send({ status: 'success', message: 'Usuarios inactivos eliminados exitosamente' });
+
         } catch (error) {
             logger.error(error)
         }
     }
 
+    deleteUser = async(req, res) =>{
+        try {
+            const uid = req.params.uid
+            await userService.deleteUser(uid)
+            res.status(200).send({ status: 'success', message: 'Usuario eliminado exitosamente' })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 }
 

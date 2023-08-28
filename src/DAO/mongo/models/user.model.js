@@ -50,7 +50,7 @@ const userSchema = new Schema({
         _id: false
     }], 
     last_connection: {
-        type: String
+        type: Date
     },
     uploadedDocuments: {
         type: Boolean,
