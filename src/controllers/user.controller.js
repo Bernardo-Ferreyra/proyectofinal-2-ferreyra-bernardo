@@ -274,6 +274,25 @@ class UserController {
     deleteUser = async(req, res) =>{
         try {
             const uid = req.params.uid
+            const user = await userService.getUserById(uid);
+            if (!user) {
+                return res.status(404).send({ status: 'error', message: 'Usuario no encontrado' });
+            }
+
+            const uploadFolders = ['documents', 'products', 'profiles'];
+            for (const folder of uploadFolders) {
+                const userFolderPath = `${__dirname}/../files/${folder}/${uid}`;
+                if (fs.existsSync(userFolderPath)) {
+                    const files = fs.readdirSync(userFolderPath);
+                    for (const file of files) {
+                        const filePath = `${userFolderPath}/${file}`;
+                        if (fs.statSync(filePath).isFile()) {
+                            fs.unlinkSync(filePath);
+                        }
+                    }
+                    fs.rmdirSync(userFolderPath);
+                }
+            }
             await userService.deleteUser(uid)
             res.status(200).send({ status: 'success', message: 'Usuario eliminado exitosamente' })
         } catch (error) {
