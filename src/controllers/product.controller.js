@@ -6,6 +6,7 @@ const { CustomError } = require("../utils/customError/customError");
 const { createProductErrorInfo } = require("../utils/customError/info");
 const { generateProducts } = require("../utils/generateProductsFaker");
 const { logger } = require("../utils/logger");
+const { sendMailDeletedProduct } = require("../utils/nodemailer");
 
 
 
@@ -96,6 +97,9 @@ class ProductController{
             if (!product) return res.status(404).send({status:'error', error: `El producto con ID ${id} no existe` })
             
             if(user && (user.role === 'admin' || (user.role === 'premium' && product.owner === user.email))){
+                if(product.owner !== 'admin'){
+                    await sendMailDeletedProduct(product)
+                }
                 const deletedProduct = await productService.deleteProduct(id)
                 if (deletedProduct) {
                     return res.status(200).send({ status:'success', payload: product });

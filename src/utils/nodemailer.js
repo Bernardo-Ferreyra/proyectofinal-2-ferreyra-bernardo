@@ -49,3 +49,15 @@ exports.sendMailDeletedUser = async (user)=>{
         </div>`
     })
 }
+
+exports.sendMailDeletedProduct = async (product, user)=>{
+    return await transport.sendMail({
+        from: 'PRODUCTO ELIMINADO<bernii.ferreyra@gmail.com>',
+        to: 'bernii.ferreyra@gmail.com'/* product.owner */,
+        subject:'se ha eliminado un producto',
+        html:`<div>
+        <h1>Se ha eliminado un producto de tu propiedad!</h1>
+        <p>estimado ${product.owner} El producto "${product.title}" se ha elminado de la base de datos</p>
+        </div>`
+    })
+}
