@@ -74,17 +74,19 @@ class ViewsController{
 
     getCartById = async(req,res)=>{
         try{
-            const cid = req.params.cid;
-            const cart = await cartService.getCartById(cid);
+            let user = req.session.user
+            const cid = req.params.cid
+            const cart = await cartService.getCartById(cid)
             if(!cart){
                 res.status(404).send({ message: `El carrito con ID ${cid} no existe` })
             }else{
                 let products= cart.products
                 res.status(201).render('cart', {
-                    products
+                    products,
+                    user
                 })
             }
-        } catch(error){
+        }catch(error){
             logger.error(error)
         }
     

@@ -19,40 +19,23 @@ const swaggerUiExpress = require('swagger-ui-express')
 const PORT = process.env.PORT;
 const app = express()
 
-const swaggerOptions = {
-    definition: {
-        openapi: '3.0.1',
-        info: {
-            title: 'Documentación de modulos Carts y Products',
-            description: 'Esta es la documentación del crud de los modulos anteriormente mencionados'
-        }
-    },
-    apis: [`${__dirname}/docs/**/*.yaml`]
-}
-
-const specs = swaggerJsDoc(swaggerOptions)
-
-app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
-
 
 const httpServer = app.listen(PORT, () => {
 	logger.info(`Escuchando en el puerto ${PORT}`);
-});
+})
 
-const socketServer = new Server(httpServer)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use('/static', express.static(__dirname+'/public'))
+app.use(cookieParser(configServer.jwt_secret_key))
+
 
 //hbs
 app.engine('handlebars', handlebars.engine())
 app.set('views',__dirname+'/views')
 app.set('view engine', 'handlebars')
 
-
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use('/static', express.static(__dirname+'/public'))
-
-app.use(cookieParser(configServer.jwt_secret_key))
-
+//session
 app.use(session({
 	store: MongoStore.create({
 		ttl: 100000*60,
@@ -74,14 +57,14 @@ initPassportGithub()
 passport.use(passport.initialize())
 passport.use(passport.session())
 
-
+//logger
 app.use(addLogger)
+app.use(errorHandler)
 
+//routers
 app.use(routerServer)
 
-/* app.use(errorHandler) */
-
-
+const socketServer = new Server(httpServer)
 //realtimeproducts
 socketServer.on('connection', socket=>{
 	logger.info("cliente conectado")
@@ -121,7 +104,6 @@ socketServer.on('connection', socket=>{
 
 })
  
-
 //chat
 socketServer.on('connection', socket => {
 
@@ -142,3 +124,16 @@ socketServer.on('connection', socket => {
 })
 
 
+//docs
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'Documentación de modulos Carts y Products',
+            description: 'Esta es la documentación del crud de los modulos anteriormente mencionados'
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+}
+const specs = swaggerJsDoc(swaggerOptions)
+app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))

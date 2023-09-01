@@ -3,6 +3,7 @@ const passport = require('passport')
 const { passportCall } = require('../config/passportCall.js')
 const userController = require('../controllers/user.controller.js')
 const { uploader } = require('../utils/multer.js')
+const { authorization } = require('../config/authorizationjwtRole.js')
 const router= Router()
 
 
@@ -22,7 +23,7 @@ router.post('/:uid/documents', uploader.array('uploads'), userController.uploadD
 
 router.get('/users', userController.getAllUsers)
 
-router.post('/deleteUsers', userController.deleteUsers)
+router.post('/deleteUsers', passportCall('current', {session: false}), authorization(['admin', 'premium']) , userController.deleteUsers)
 
 router.delete('/:uid/deleteUser', userController.deleteUser)
 
