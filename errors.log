@@ -8,19 +8,7 @@ error: One or more properties are incomplete or not valid
     # code: needs to be a string, received => 1122
     #stock: needs to be a number, received => 232
     #category: needs to be string, received => prueba 12
-
-error: undefined {"kind":"date","path":"last_connection","reason":{"actual":false,"code":"ERR_ASSERTION","expected":true,"generatedMessage":true,"operator":"=="},"stringValue":"\"14/8/2023 21:32:01\"","value":"14/8/2023 21:32:01","valueType":"string"}
-error: undefined {"kind":"date","path":"last_connection","reason":{"actual":false,"code":"ERR_ASSERTION","expected":true,"generatedMessage":true,"operator":"=="},"stringValue":"\"Invalid Date\"","value":null,"valueType":"Date"}
-error: undefined
-error: undefined
-error: undefined
-error: undefined
-error: undefined
 error: undefined {"code":"ERR_HTTP_HEADERS_SENT"}
-error: undefined
-error: undefined
-error: undefined
-error: undefined
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
@@ -54,3 +42,11 @@ error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"co
 error: undefined {"_message":"products validation failed","errors":{"code":{"kind":"required","message":"Path `code` is required.","name":"ValidatorError","path":"code","properties":{"message":"Path `code` is required.","path":"code","type":"required","value":null},"value":null}}}
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64fxcfgvdfgbt\"","value":"64fxcfgvdfgbt","valueType":"string"}
 error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64fxcfgvdfgbt\"","value":"64fxcfgvdfgbt","valueType":"string"}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"113"}}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"113"}}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"113"}}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64f7794b6\"","value":"64f7794b6","valueType":"string"}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"321321"}}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"321321"}}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"321321"}}
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"120"}}

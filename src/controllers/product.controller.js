@@ -68,7 +68,7 @@ class ProductController{
             let product = await productService.createProduct(newProduct)
             !product
             ? res.status(400).send({status:'error', error: "No se pudo crear el producto" })
-            : res.status(201).send({status:'success', payload: product})
+            : res.status(201).send({status:'success', payload: product, message:'Producto creado correctamente'})
         }catch(error){
             next(error)
         }
@@ -109,7 +109,7 @@ class ProductController{
                 }
                 const deletedProduct = await productService.deleteProduct(id)
                 if (deletedProduct) {
-                    return res.status(200).send({ status:'success', payload: product });
+                    return res.status(200).send({ status:'success', payload: product, message:'El producto se ha eliminado correctamente'});
                 }
             }
             return res.status(401).send({status:'error', error: "No tienes permiso para eliminar este producto" })

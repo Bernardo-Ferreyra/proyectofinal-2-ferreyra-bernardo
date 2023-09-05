@@ -8,7 +8,7 @@ router.get('/', viewsController.getProducts)
 
 router.get('/carts/:cid', viewsController.getCartById)
 
-router.get('/realTimeProducts',passportCall('current', {session: false}),authorization(['admin']), viewsController.getRealTimeProducts)
+router.get('/realTimeProducts',passportCall('current', {session: false}),authorization(['admin', 'premium']), viewsController.getRealTimeProducts)
 
 router.get('/api/session/usersControlPanel',passportCall('current', {session: false}), authorization(['admin']), viewsController.usersControlPanel)
 
