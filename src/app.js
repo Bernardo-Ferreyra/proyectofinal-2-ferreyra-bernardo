@@ -15,7 +15,7 @@ const { errorHandler } = require('./middlewares/error.middleware.js');
 const { addLogger, logger } = require('./utils/logger.js');
 const ObjectId = mongoose.Types.ObjectId
 const swaggerJsDoc = require('swagger-jsdoc')
-const swaggerUiExpress = require('swagger-ui-express')
+const swaggerUiExpress = require('swagger-ui-express');
 const PORT = process.env.PORT;
 const app = express()
 

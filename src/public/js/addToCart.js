@@ -19,10 +19,21 @@ function addToCart(cartId, productId) {
         }
       })
       .then(data => {
-        alert('producto agregado al carrito')
-        console.log(data);
+        Swal.fire({
+          toast: true,
+          icon: 'success',
+          title: `${data.message}`,
+          position: 'bottom-right',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        })
       })
       .catch(error => {
-        alert('Error: ' + error)
-      });
+        Swal.fire({
+            title: 'No se pudo agregar el producto',
+            text: `${error}`,
+            icon: 'error'
+        })
+      })
   }

@@ -21,3 +21,36 @@ error: undefined
 error: undefined
 error: undefined
 error: undefined
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen3\"","value":"ruta de imagen3","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen3\"","value":"ruta de imagen3","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen3\"","value":"ruta de imagen3","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"product","reason":{},"stringValue":"\"undefined\"","value":"undefined","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen3\"","value":"ruta de imagen3","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen5\"","value":"ruta de imagen5","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"ruta de imagen4\"","value":"ruta de imagen4","valueType":"string"}
+error: undefined
+error: undefined {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"123123123"}}
+error: undefined {"_message":"products validation failed","errors":{"code":{"kind":"required","message":"Path `code` is required.","name":"ValidatorError","path":"code","properties":{"message":"Path `code` is required.","path":"code","type":"required","value":null},"value":null}}}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64fxcfgvdfgbt\"","value":"64fxcfgvdfgbt","valueType":"string"}
+error: undefined {"kind":"ObjectId","path":"_id","reason":{},"stringValue":"\"64fxcfgvdfgbt\"","value":"64fxcfgvdfgbt","valueType":"string"}

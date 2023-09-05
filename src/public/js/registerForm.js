@@ -31,8 +31,14 @@ document.getElementById('registrationForm').addEventListener('submit', async (ev
     
 
     if (responseData.status === 'success') {
-        alert('usuario creado correctamente, inicia sesion')
-        window.location.href = '/api/session/login';
+        Swal.fire({
+            title: 'usuario creado correctamente, inicia sesion',
+            timer: 8000,
+            icon: 'success'
+        })
+        .then(() => {
+            window.location.href = '/api/session/login';
+        })
     } else {
         console.error(responseData.error);
     }

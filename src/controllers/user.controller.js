@@ -2,8 +2,8 @@ const { UserDto } = require("../dto/user.dto");
 const { userService, cartService } = require("../services/Services");
 const { createHash, isValidPassword } = require("../utils/bcryptHash");
 const { generateToken, generateResetToken, verifyResetToken } = require("../utils/jwt");
-const { logger } = require("../utils/logger");
 const { sendResetPassMail, sendMailDeletedUser } = require("../utils/nodemailer");
+const { logger } = require("../utils/logger");
 const fs = require('fs')
 
 
@@ -63,11 +63,6 @@ class UserController {
 
             const newCart = {products:[]}
             const cart= await cartService.createCart(newCart)
-
-            let role = 'user'
-            if(email === 'premium@premium.com'){
-                role = "premium"
-            }
         
             const newUser={
                 username,
@@ -76,7 +71,7 @@ class UserController {
                 email,
                 date_of_birth: new Date(date_of_birth).toLocaleDateString(),
                 cart: cart._id,
-                role: role,
+                role: 'user',
                 password : createHash(password)
             }
             const userDB = await userService.createUser(newUser)
@@ -230,7 +225,7 @@ class UserController {
     deleteUsers = async(req, res) =>{
         try {
             const currentDate = new Date();
-            const twoDaysAgo = new Date(currentDate - 3* 60  * 1000/* 2 * 24 * 60 * 60 * 1000 */)
+            const twoDaysAgo = new Date(currentDate - 2 * 24 * 60 * 60 * 1000)
 
             const allUsers = await userService.getAllUsers()
             
@@ -239,7 +234,7 @@ class UserController {
                 return lastConnectionDate <= twoDaysAgo
             })
             if (inactiveUsers.length === 0) {
-                return res.status(200).send({ status: 'success', message: 'No hay usuarios inactivos para eliminar' });
+                return res.status(200).send({ status:'error', message: 'No hay usuarios inactivos para eliminar' });
             }
 
             for (const user of inactiveUsers) {

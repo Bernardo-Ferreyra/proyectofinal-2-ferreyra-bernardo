@@ -1,31 +1,31 @@
 const {Router} = require('express')
 const passport = require('passport')
-const { passportCall } = require('../config/passportCall.js')
+const { passportCall } = require('../middlewares/passportCall.js')
+const { authorization } = require('../middlewares/authorizationjwtRole.js')
 const userController = require('../controllers/user.controller.js')
 const { uploader } = require('../utils/multer.js')
-const { authorization } = require('../config/authorizationjwtRole.js')
 const router= Router()
 
+
+router.get('/users', userController.getAllUsers)
+
+router.get('/premium/:uid', userController.changeRole)
+
+router.get('/logout', userController.logout)
 
 router.post('/login', userController.login )
 
 router.post('/register', userController.register)
 
-router.get('/logout', userController.logout)
-
 router.post('/forgotPassword', userController.forgotpassword)
 
 router.post('/resetPassword', userController.resetPassword)
 
-router.get('/premium/:uid', userController.changeRole)
-
 router.post('/:uid/documents', uploader.array('uploads'), userController.uploadDocuments)
 
-router.get('/users', userController.getAllUsers)
+router.post('/deleteUsers', passportCall('current', {session: false}), authorization(['admin']) , userController.deleteUsers)
 
-router.post('/deleteUsers', passportCall('current', {session: false}), authorization(['admin', 'premium']) , userController.deleteUsers)
-
-router.delete('/:uid/deleteUser', userController.deleteUser)
+router.delete('/:uid/deleteUser',passportCall('current', {session: false}), authorization(['admin']), userController.deleteUser)
 
 
 //github

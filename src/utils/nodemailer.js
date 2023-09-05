@@ -13,7 +13,7 @@ const transport = nodemailer.createTransport({
 exports.sendMail = async (body)=>{
     return await transport.sendMail({
         from: 'COMPRA REALIZADA<bernii.ferreyra@gmail.com>',
-        to: 'bernii.ferreyra@gmail.com', //${body.purchaser}
+        to: `${body.purchaser}`,
         subject:'Gracias por realizar la compra',
         html:`<div>
         <h1>Tu compra ha sido completada con exito</h1>

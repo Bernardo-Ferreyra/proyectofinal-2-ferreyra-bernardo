@@ -45,7 +45,7 @@ class CartController{
             let respuesta= await cartService.emptyCart(cid)
             !respuesta
             ?res.status(400).send({status:'error', error:'no se pudo vaciar el carrito'})
-            :res.status(200).send({status: 'success', payload: respuesta})
+            :res.status(200).send({status: 'success', message: 'El carrito se ha vaciado!'})
         }catch(error){
             logger.error(error)
         }
@@ -58,7 +58,7 @@ class CartController{
             let respuesta = await cartService.deleteProductFromCart(cid,pid)
             !respuesta
             ?res.status(400).send({status:'error', error:'no se pudo eliminar el producto del carrito'})
-            :res.status(200).send({ status:'success', payload: respuesta})
+            :res.status(200).send({ status:'success', payload: respuesta, message:'producto eliminado del carrito'})
         }catch(error){
             logger.error(error)
         }
@@ -106,7 +106,7 @@ class CartController{
             const addProduct= await cartService.addToCart(cid, pid, cantidad)
             !addProduct
             ?res.status(400).send({status:'error', error:'no se pudo agregar el producto'})
-            :res.status(200).send({status:'success', payload: addProduct})
+            :res.status(200).send({status:'success', message:'Producto Agregado al Carrito', payload: addProduct})
         }catch(error){
             logger.error(error)
         }
@@ -136,10 +136,12 @@ class CartController{
                 !productsWithoutStock.some(p => p.product._id === item.product._id));
 
             if (purchasedProducts.length > 0) {
+                let amountWithoutTax = purchasedProducts.reduce((total, item) => total + (item.cantidad * item.product.price), 0)
+                let amountWithTax = amountWithoutTax + Math.round(amountWithoutTax * 0.21)
                 const ticket = {
                     code: uuidv4(),
                     purchase_datetime: new Date(),
-                    amount: purchasedProducts.reduce((total, item) => total + (item.cantidad * item.product.price), 0),
+                    amount: amountWithTax,
                     purchaser: req.user.email
                 };
         
@@ -158,7 +160,7 @@ class CartController{
         
             } else {
                 const productsWithoutStockIds = productsWithoutStock.map(item => item.product._id);
-                res.status(400).send({message: 'La compra no se pudo completar', payload: productsWithoutStockIds});
+                res.status(400).send({status:'error', error: 'La compra no se pudo completar, no hay stock suficiente'});
             }
         }catch(error){
             logger.error(error)

@@ -81,13 +81,21 @@ class ViewsController{
                 res.status(404).send({ message: `El carrito con ID ${cid} no existe` })
             }else{
                 let products= cart.products
+                let subTotalPrice = products.reduce((total, item) => total + (item.cantidad * item.product.price), 0)
+                let iva = Math.round(subTotalPrice * 0.21)
+                products.forEach((item) => {item.totalProducto = item.cantidad * item.product.price})
+                let totalPrice = subTotalPrice + iva
+
                 res.status(201).render('cart', {
                     products,
-                    user
+                    user,
+                    subTotalPrice,
+                    iva,
+                    totalPrice
                 })
             }
         }catch(error){
-            logger.error(error)
+            console.log(error)
         }
     
     }
@@ -122,8 +130,6 @@ class ViewsController{
         }
 
     }
-
-
 
 }
 

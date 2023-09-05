@@ -1,5 +1,6 @@
 const multer = require('multer')
 const fs = require('fs')
+const { userService } = require('../services/Services')
 
 const storage = multer.diskStorage({
     destination: async function(req, file, cb) {
@@ -27,32 +28,41 @@ const storage = multer.diskStorage({
     }
 })
 
-const fileFilter = function(req, file, cb) {
-    const validDocumentNames = [
-        'Identificacion',
-        'Comprobante de domicilio',
-        'Comprobante de estado de cuenta'
-    ]
-    const validExtensions = ['.jpg', '.jpeg', '.png', '.pdf']
+const fileFilter = async function(req, file, cb) {
+    const userId = req.params.uid;
+    const userDB = await userService.getUserById(userId);
 
-    const uploadType = req.body.uploadType
-    if (uploadType === 'document') {
-        const fileName = file.originalname.split('.') // Divide el nombre y la extensión
-        const fileBaseName = fileName.slice(0, -1).join('.') // Obtiene el nombre sin la extensión
-        const fileExtension = `.${fileName.pop()}` // Obtiene la extensión (incluye el punto)
+    if (!userDB) {
+        cb(new Error('Usuario inexistente'), false);
+    }else {
+        const validDocumentNames = [
+            'Identificacion',
+            'Comprobante de domicilio',
+            'Comprobante de estado de cuenta'
+        ];
+        const validExtensions = ['.jpg', '.jpeg', '.png', '.pdf'];
 
-        if (
-            validDocumentNames.includes(fileBaseName) &&
-            validExtensions.includes(fileExtension)
-        ) {
-            cb(null, true)
+        const uploadType = req.body.uploadType;
+        if (uploadType === 'document') {
+            const fileName = file.originalname.split('.');
+            const fileBaseName = fileName.slice(0, -1).join('.');
+            const fileExtension = `.${fileName.pop()}`;
+
+            if (
+                validDocumentNames.includes(fileBaseName) &&
+                validExtensions.includes(fileExtension)
+            ) {
+                cb(null, true);
+            } else {
+                cb(new Error('Invalid file name or extension for document upload'), false);
+            }
         } else {
-            cb(new Error('Invalid file name or extension for document upload'), false);
+            cb(null, true);
         }
-    } else {
-        cb(null, true)
     }
 }
+
+
 
 const uploader = multer({
     storage,

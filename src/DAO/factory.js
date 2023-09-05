@@ -5,7 +5,6 @@ let CartDao
 
 switch (config.persistence) {
     case 'MONGO':
-        //coneccion
         config.connectDb()
         const ProductDaoMongo = require ('./mongo/product.mongo.js')
         const CartDaoMongo = require('./mongo/cart.mongo.js')

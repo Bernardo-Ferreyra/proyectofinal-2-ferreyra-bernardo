@@ -1,29 +1,28 @@
 const {Router} = require('express')
-const cartController = require('../controllers/cart.controller.js');
-const { passportCall } = require('../config/passportCall.js');
-const { authorization } = require('../config/authorizationjwtRole.js');
+const cartController = require('../controllers/cart.controller.js')
+const { passportCall } = require('../middlewares/passportCall.js')
+const { authorization } = require('../middlewares/authorizationjwtRole.js')
 const router = Router()
 
 
-router.post('/', cartController.createCart);
+router.get('/', cartController.getCarts)
 
-router.get('/', cartController.getCarts);
+router.get('/:cid', cartController.getCartById)
 
-router.get('/:cid', cartController.getCartById);
+router.post('/', cartController.createCart)
 
-router.delete('/:cid', cartController.emptyCart)
+router.post('/:cid/products/:pid',passportCall('current', {session: false}), authorization(['user','premium','admin']), cartController.addToCart)
+
+router.post('/:cid/purchase',passportCall('current', {session: false}), authorization(['user','premium','admin']), cartController.generateTicket )
 
 router.put('/:cid', cartController.modifyCart)
 
-router.delete('/:cid/products/:pid', cartController.deleteProductFromCart)
-
 router.put('/:cid/products/:pid', cartController.modifyProductFromCart)
 
-router.post('/:cid/products/:pid',passportCall('current', {session: false}), authorization(['user','premium','admin']), cartController.addToCart);
+router.delete('/:cid', cartController.emptyCart)
 
-router.post('/:cid/purchase',passportCall('current', {session: false}), authorization(['user','premium','admin']), cartController.generateTicket );
+router.delete('/:cid/products/:pid', cartController.deleteProductFromCart)
 
 
-
-module.exports= router;
+module.exports = router
 

@@ -1,6 +1,5 @@
 const { ProductDto } = require("../dto/product.dto");
 const { productService } = require("../services/Services");
-
 const { Error } = require("../utils/customError/Errors");
 const { CustomError } = require("../utils/customError/customError");
 const { createProductErrorInfo } = require("../utils/customError/info");
@@ -77,12 +76,20 @@ class ProductController{
 
     updateProduct = async(req, res)=>{
         try{
-            const id = req.params.pid;
+            const pid = req.params.pid
+            const user = req.user
             const productModify= req.body
-            const modifiedProduct= await productService.updateProduct(id, productModify)
-            !modifiedProduct
-            ? res.status(400).send({ status:'error', error: 'No se ha podido modificar!' })
-            : res.status(200).send({ status: 'success', payload: productModify })
+
+            const product = await productService.getProductById(pid)
+            if (!product) return res.status(404).send({status:'error', error: `El producto con ID ${pid} no existe` })
+            
+            if(user && (user.role === 'admin' || (user.role === 'premium' && product.owner === user.email))){
+                const modifiedProduct= await productService.updateProduct(pid, productModify)
+                !modifiedProduct
+                ? res.status(400).send({ status:'error', error: 'No se ha podido modificar!' })
+                : res.status(200).send({ status: 'success', payload: productModify })
+            }
+            return res.status(401).send({status:'error', error: "No tienes permiso para modificar este producto" })
         }catch(error){
             logger.error(error)
         }

@@ -33,33 +33,30 @@ socket.on('newList', data => {
         return {status: 'error', mesage: 'Producto no encontrado'}
     }
 
-    let list
-    data.forEach(({_id, title, code, price, category, description, stock, thumbnail}) => {
+    let list=''
+    data.forEach(({_id, title, code, price, category, description, stock, thumbnail, owner}) => {
         list +=`
-        <tr>
-        <td>${_id}</td>
-        <td>${title}</td>
-        <td>${code}</td>
-        <td>${price}</td>
-        <td>${category}</td>
-        <td>${description}</td>
-        <td>${stock}</td>
-        <td>${thumbnail}</td>
-      </tr>`
+      <div class="px-5 row align-items-start">
+        <div class="col-2 mb-2">
+          <img class="img-fluid" src="${thumbnail}" alt="${title}" />
+        </div>
+        <div class="col-6 mb-2">
+          <p class="h5 mb-2">${_id}</p>
+          <p class="pl-1 mb-1 h6">${title}</p>
+          <p class="pl-1 mb-1 h6">Code: ${code}</p>
+          <p class="pl-1 mb-1">Category: ${category}</p>
+          <p class="pl-1 mb-1">Description: ${description}</p>
+          <p class="pl-1 mb-1">Owner: ${owner}</p>
+        </div>
+        <div class="col-4 d-flex flex-column align-items-end">
+          <p class="h5 mt-2">$${price}</p>
+          <p class="p-1 h5">Stock: ${stock}</p>
+        </div>
+        <hr />
+      </div>`
     })
     
-    const listAct = `
-        <tr>
-        <th scope="col">#id</th>
-        <th scope="col">nombre</th>
-        <th scope="col">codigo</th>
-        <th scope="col">precio</th>
-        <th scope="col">categoria</th>
-        <th scope="col">descripcion</th>
-        <th scope="col">stock</th>
-        <th scope="col">imagenes</th>
-        </tr>` + list
-    document.getElementById('tableProduct').innerHTML = listAct
+    document.getElementById('productList').innerHTML = list
     Swal.fire({
         title: 'Producto Eliminado',
         timer: 8000,
@@ -107,33 +104,30 @@ socket.on('productAdded', (newData) => {
         })
         return {status: 'error', message: 'No se pudo agregar el producto'}
     }
-    let list
-    newData.forEach(({_id, title, code, price, category, description, stock, thumbnail}) => {
+    let list=''
+    newData.forEach(({_id, title, code, price, category, description, stock, thumbnail, owner}) => {
         list +=`
-        <tr>
-        <td>${_id}</td>
-        <td>${title}</td>
-        <td>${code}</td>
-        <td>${price}</td>
-        <td>${category}</td>
-        <td>${description}</td>
-        <td>${stock}</td>
-        <td>${thumbnail}</td>
-        </tr>`
+        <div class="px-5 row align-items-start">
+        <div class="col-2 mb-2">
+          <img class="img-fluid" src="${thumbnail}" alt="${title}" />
+        </div>
+        <div class="col-6 mb-2">
+          <p class="h5 mb-2">${_id}</p>
+          <p class="pl-1 mb-1 h6">${title}</p>
+          <p class="pl-1 mb-1 h6">Code: ${code}</p>
+          <p class="pl-1 mb-1">Category: ${category}</p>
+          <p class="pl-1 mb-1">Description: ${description}</p>
+          <p class="pl-1 mb-1">Owner: ${owner}</p>
+        </div>
+        <div class="col-4 d-flex flex-column align-items-end">
+          <p class="h5 mt-2">$${price}</p>
+          <p class="p-1 h5">Stock: ${stock}</p>
+        </div>
+        <hr />
+      </div>`
     })
-    const listAct = `
-        <tr>
-        <th scope="col">#id</th>
-        <th scope="col">nombre</th>
-        <th scope="col">codigo</th>
-        <th scope="col">precio</th>
-        <th scope="col">categoria</th>
-        <th scope="col">descripcion</th>
-        <th scope="col">stock</th>
-        <th scope="col">imagenes</th>
-        </tr>` + list
 
-    document.getElementById('tableProduct').innerHTML = listAct
+    document.getElementById('productList').innerHTML = list
     Swal.fire({
         title: 'Producto Agregado Correctamente',
         timer: 8000,
