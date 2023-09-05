@@ -14,7 +14,7 @@ const { errorHandler } = require('./middlewares/error.middleware.js')
 const { addLogger, logger } = require('./utils/logger.js')
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUiExpress = require('swagger-ui-express')
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 8080
 const app = express()
 
 
