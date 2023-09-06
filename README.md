@@ -123,6 +123,9 @@ La documentación del aplicativo se encuentra disponible a través de Swagger en
 
 - **RealtimeProducts**: `/realTimeProducts`Vista que muestra los productos en tiempo real, permitiendo crear y eliminar productos.(solo accesible para usuarios premium y admin)
 
+- **CHAT**: `/chat` Vista que muestra un chat interactivo en tiempo real utilizando **socket.io** 
+[https://ferreyra-bernardo-backend39750.onrender.com/chat](https://ferreyra-bernardo-backend39750.onrender.com/chat "https://ferreyra-bernardo-backend39750.onrender.com/chat")
+
 ## Documentacion
 ** Para obtener más detalles sobre el funcionamiento y uso de la aplicación, consulte la documentación completa en el endpoint `/docs`. ¡Disfrute explorando el aplicativo de desarrollo backend!**:smile:
 
